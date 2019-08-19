@@ -1,17 +1,88 @@
-{% extends 'base.html.twig' %}
+{% extends 'empty.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="row justify-content-center center-row">
+        <div class="col-4">
+            <div class="card">
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.password) }}
+                <h5 class="card-header success-color-dark white-text text-center py-4">
+                    <strong>Sign up</strong>
+                </h5>
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <!--Card content-->
+                <div class="card-body px-lg-5 pt-0">
+
+                    <!-- Form -->
+                    {{ form_start(registrationForm) }}
+                        <div class="form-row">
+                            <div class="col">
+                                <!-- First name -->
+                                <div class="md-form">
+                                    {{ form_label(registrationForm.nom) }}
+                                    {{ form_widget(registrationForm.nom) }}
+                                    <small class="form-text text-danger mb-4">
+                                        {{ form_errors(registrationForm.nom) }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <!-- Last name -->
+                                <div class="md-form">
+                                    {{ form_label(registrationForm.prenom) }}
+                                    {{ form_widget(registrationForm.prenom) }}
+                                    <small class="form-text text-danger mb-4">
+                                        {{ form_errors(registrationForm.prenom) }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="md-form mt-0">
+                            {{ form_label(registrationForm.email) }}
+                            {{ form_widget(registrationForm.email) }}
+                            <small class="form-text text-danger mb-4">
+                                {{ form_errors(registrationForm.email) }}
+                            </small>
+                        </div>
+
+                        <div class="md-form">
+                            {{ form_label(registrationForm.telephone) }}
+                            {{ form_widget(registrationForm.telephone) }}
+                            <small class="form-text text-danger mb-4">
+                                {{ form_errors(registrationForm.telephone) }}
+                            </small>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="md-form">
+                            {{ form_label(registrationForm.password.first) }}
+                            {{ form_widget(registrationForm.password.first) }}
+                            <small class="form-text text-danger mb-4">
+                                {{ form_errors(registrationForm.password.first) }}
+                            </small>
+                        </div>
+
+                        <div class="md-form">
+                            {{ form_label(registrationForm.password.second) }}
+                            {{ form_widget(registrationForm.password.second) }}
+                            <small class="form-text text-danger mb-4">
+                                {{ form_errors(registrationForm.password.second) }}
+                            </small>
+                        </div>
+
+                        <!-- Sign up button -->
+                        <button class="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+                        <p>Already a Member?
+                            <a href="{{ path('Index') }}" class="green-link">Login</a>
+                        </p>
+                    <!-- Form -->
+                    {{ form_end(registrationForm) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
