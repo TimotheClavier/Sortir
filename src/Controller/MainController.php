@@ -12,6 +12,8 @@ class MainController extends Controller
      */
     public function index()
     {
+        $user = $this->getUser();
+        var_dump($user);
         return $this->render('index.html.twig');
     }
 }
