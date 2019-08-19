@@ -18,6 +18,6 @@ class MainController extends Controller
         } else {
             $view = "pages/login.html.twig";
         }
-        return $this->render($view);
+        return $this->render("profil.html.twig");
     }
 }
