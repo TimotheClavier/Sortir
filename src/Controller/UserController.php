@@ -78,4 +78,20 @@ class UserController extends Controller
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
+
+    /**
+     * @Route("/profile", name="app_profile")
+     */
+
+    public function profile($id)
+    {
+
+        $profile = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find(6);
+
+        return $this->render('registration/register.html.twig', [
+            'profile' => $profile,
+        ]);
+    }
 }
