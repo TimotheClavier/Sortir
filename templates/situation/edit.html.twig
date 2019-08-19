@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Situation{% endblock %}
+
+{% block body %}
+    <h1>Edit Situation</h1>
+
+    {{ include('situation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('situation_index') }}">back to list</a>
+
+    {{ include('situation/_delete_form.html.twig') }}
+{% endblock %}
