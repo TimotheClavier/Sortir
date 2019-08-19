@@ -12,6 +12,12 @@ class MainController extends Controller
      */
     public function index()
     {
-        return $this->render('index.html.twig');
+        $user = $this->getUser();
+        if ($user !== null) {
+            $view = "index.html.twig";
+        } else {
+            $view = "pages/login.html.twig";
+        }
+        return $this->render($view);
     }
 }
