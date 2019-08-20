@@ -63,14 +63,11 @@ class User implements UserInterface
     private $active;
 
     /**
+     * Trip[]
      * @ManyToMany(targetEntity="Trip", inversedBy="users")
      * @JoinTable(name="users_trips")
      */
     private $trips;
-
-    public function __construct() {
-        $this->trips = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getId()
     {
@@ -206,6 +203,25 @@ class User implements UserInterface
     public function setActive(bool $active)
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Trip[]
+     */
+    public function getTrips()
+    {
+        return $this->trips;
+    }
+
+    /**
+     * @param mixed $trips
+     * @return User
+     */
+    public function setTrips($trips)
+    {
+        $this->trips = $trips;
 
         return $this;
     }

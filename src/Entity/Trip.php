@@ -76,15 +76,11 @@ class Trip
     private $place;
 
     /**
+     * User[]
      * Many Groups have Many Users.
      * @ManyToMany(targetEntity="User", mappedBy="trips")
      */
     private $users;
-
-    public function __construct() {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
 
     public function getId()
     {
@@ -184,6 +180,63 @@ class Trip
     public function setCause(string $cause)
     {
         $this->cause = $cause;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganizer()
+    {
+        return $this->organizer;
+    }
+
+    /**
+     * @param mixed $organizer
+     * @return Trip
+     */
+    public function setOrganizer($organizer)
+    {
+        $this->organizer = $organizer;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * @param mixed $place
+     * @return Trip
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     * @return Trip
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
 
         return $this;
     }

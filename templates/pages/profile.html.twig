@@ -6,51 +6,16 @@
 {% block body %}
     <h1>Mon profil</h1>
 
-    <div>
-        <form class="text-center border border-light p-5" action="#!">
-            <div class="md-form">
+    {{ form_start(profileForm) }}
+    {{ form_row(profileForm.nom) }}
+    {{ form_row(profileForm.prenom) }}
+    {{ form_row(profileForm.email) }}
+    {{ form_row(profileForm.telephone) }}
+    {{ form_row(profileForm.password) }}
+    {{ form_row(profileForm.city) }}
 
-                <input value="{{profile.nom}}" type="text" id="nom" class="form-control">
-                <label for="nom">Nom</label>
-            </div>
-            <div class="md-form">
+    <button class="btn">Enregistrer</button>
+    {{ form_end(profileForm) }}
 
-                <input value="{{profile.prenom}}" type="text" id="prenom" class="form-control">
-                <label for="prenom">Prénom</label>
-            </div>
-            <div class="md-form">
-
-                <input value="{{profile.telephone}}" type="text" id="telephone" class="form-control">
-                <label for="telephone">Téléphone</label>
-            </div>
-            <div class="md-form">
-
-                <input value="{{profile.email}}" type="text" id="email" class="form-control">
-                <label for="email">Email</label>
-            </div>
-            <div class="md-form">
-
-                <input value="" type="password" id="mdp" class="form-control">
-                <label for="mdp">Mot de passe</label>
-            </div>
-            <div class="md-form">
-
-                <input value="" type="password" id="confirmation" class="form-control">
-                <label for="confirmation">Confirmation</label>
-            </div>
-            <div class="md-form">
-
-                <input value="John Doe" type="text" id="ville" class="form-control">
-                <label for="ville">Ville</label>
-            </div>
-            <div class="md-form">
-                <input value="" type="file" id="photo" class="form-control">
-                <label for="photo">Photo</label>
-            </div>
-            <!-- Send button -->
-            <button class="btn btn-info btn-block" type="submit">Send</button>
-
-        </form>
-    </div>
 {% endblock %}
 

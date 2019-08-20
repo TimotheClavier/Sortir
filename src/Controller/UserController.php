@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\User;
+use App\Form\ProfileFormType;
 use App\Form\RegistrationFormType;
 use App\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,25 +17,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // if ($this->getUser()) {
-        //    $this->redirectToRoute('target_path');
-        // }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
 
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param UserAuthenticator $authenticator
+     * @return Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator): Response
     {
@@ -81,17 +72,55 @@ class UserController extends Controller
 
     /**
      * @Route("/profile", name="app_profile")
+     * @param Request $request
+     * @return Response
      */
-
-    public function profile($id)
+    public function profile(Request $request)
     {
-
+        $profile = new User();
         $profile = $this->getDoctrine()
             ->getRepository(User::class)
             ->find(6);
 
-        return $this->render('registration/register.html.twig', [
-            'profile' => $profile,
+
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
+
+
+
+        $form = $this->createForm(ProfileFormType::class, $profile, array(
+            'action' => $this->generateUrl('app_profile'),
+            'method' => 'PUT',
+            'choices' => $profile,
+            'cities' => $cities,
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $profile->setNom($form->get("nom")->getData());
+            $profile->setPrenom($form->get("prenom")->getData());
+            $profile->setEmail($form->get("email")->getData());
+            $profile->setTelephone($form->get("telephone")->getData());
+
+            $city = new City();
+            $city = $this->getDoctrine()
+                ->getRepository(City::class)
+                ->find($form->get("city")->getData());
+
+            $profile->setCity($city);
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profile');
+
+        }
+
+        return $this->render('pages/profile.html.twig', [
+            'profileForm' => $form->createView(),
         ]);
     }
 }

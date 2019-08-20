@@ -1,3 +1,24 @@
+.green-link {
+    color: #00c851!important;
+}
+
 .center-row {
     margin-top: 20vh;
+}
+
+
+.profile{
+    width: 1000px!important;
+    height:700px!important;
+
+}
+
+.profileImage{
+    width:200px;
+    height: 200px;
+    margin-left:700px;
+    margin-top:50px;
+
+    position: absolute;
+    background-color: #0b51c5;
 }
