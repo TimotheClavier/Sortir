@@ -29,6 +29,8 @@ class TripController extends Controller
 
     /**
      * @Route("/new", name="trip_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -41,6 +43,7 @@ class TripController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trip->setOrganizer($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trip);
             $entityManager->flush();
