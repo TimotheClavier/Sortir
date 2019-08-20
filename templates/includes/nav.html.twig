@@ -9,7 +9,7 @@
             <li class="{{ app.request.get('_route') == 'Index' ? 'active' }} nav-item">
                 <a class="nav-link" href="{{ path('Index') }}">Accueil</a>
             </li>
-            <li class="nav-item">
+            <li class="{{ app.request.get('_route') == 'app_profile' ? 'active' }} nav-item">
                 <a class="nav-link" href="{{ path('app_profile') }}">Mon Profil</a>
             </li>
             <li class="nav-item dropdown">

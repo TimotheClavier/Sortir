@@ -8,6 +8,11 @@ $(document).ready( function() {
   });
   $('#data-table-place').DataTable();
   $('.dataTables_length').addClass('bs-select');
+
+  $(".button-collapse").sideNav();
+// SideNav Scrollbar Initialization
+  var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+  var ps = new PerfectScrollbar(sideNavScrollbar);
   Notiflix.Confirm.Init();
 })
 
