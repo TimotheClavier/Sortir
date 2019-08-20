@@ -51,7 +51,7 @@ class Trip
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="organisedTrips")
      */
     private $organizer;
 
