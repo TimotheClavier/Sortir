@@ -56,6 +56,14 @@
                             </small>
                         </div>
 
+                    <div class="">
+                        {{ form_label(registrationForm.city) }}
+                        {{ form_widget(registrationForm.city) }}
+                        <small class="form-text text-danger mb-4">
+                            {{ form_errors(registrationForm.city) }}
+                        </small>
+                    </div>
+
                         <!-- Password -->
                         <div class="md-form">
                             {{ form_label(registrationForm.password.first) }}
@@ -76,7 +84,7 @@
                         <!-- Sign up button -->
                         <button class="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
                         <p>Already a Member?
-                            <a href="{{ path('Index') }}" class="green-link">Login</a>
+                            <a href="{{ path('Index') }}" class="green-link">Inscription</a>
                         </p>
                     <!-- Form -->
                     {{ form_end(registrationForm) }}

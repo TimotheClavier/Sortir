@@ -22,17 +22,10 @@ class ProfileFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $profile = new User();
-        $profile = $options['choices'];
-        $nb = $profile->getCity()->getId();
+        $profile = $options['profile'];
 
         $cities = [];
-        foreach ($options ['cities'] as $city) {
-            if (!empty($city->getLibelle())) {
-                $cities[$city->getId()] = $city->getLibelle();
-            }
-        }
-        //$options['cities'][$profile->getCity()->getId()]
+
 
         $builder
             ->add('nom', TextType::class, [
@@ -86,8 +79,27 @@ class ProfileFormType extends AbstractType
                 "choice_value" => "id",
                 "attr" => [
                     'class' =>"form-control w-50",
-                    'value' => $cities[$profile->getCity()->getId()]
+                    'value' => $profile->getCity()->getLibelle()
                 ]
+            ])
+            ->add('avatar' ,FileType::class, [
+                'label' => 'Avatar : ',
+                'data_class' => null,
+                // make it optional so you don't have to re-upload the PDF file
+                // everytime you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\File([
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'Choisissez un format valide.',
+                    ])
+                ],
             ])
            ;
     }
@@ -96,7 +108,7 @@ class ProfileFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'choices' => null,
+            'profile' => null,
             'cities' => null,
 
         ]);
