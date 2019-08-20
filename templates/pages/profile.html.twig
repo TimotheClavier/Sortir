@@ -4,18 +4,78 @@
 
 
 {% block body %}
+    <div style="position:absolute;
+   left:50%;
+   width:800px;
+   height:200px;
+   margin-left:-150px;">
     <h1>Mon profil</h1>
 
     {{ form_start(profileForm) }}
-    {{ form_row(profileForm.nom) }}
-    {{ form_row(profileForm.prenom) }}
-    {{ form_row(profileForm.email) }}
-    {{ form_row(profileForm.telephone) }}
-    {{ form_row(profileForm.password) }}
-    {{ form_row(profileForm.city) }}
+    <div class="col">
+        <div class="md-form">
+            {{ form_label(profileForm.nom) }}
+            {{ form_widget(profileForm.nom) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.nom) }}
+            </small>
+        </div>
+        <div class="md-form">
+            {{ form_label(profileForm.prenom) }}
+            {{ form_widget(profileForm.prenom) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.prenom) }}
+            </small>
+        </div>
+    </div>
+    <div class="col">
+        <div class="md-form">
+            {{ form_label(profileForm.email) }}
+            {{ form_widget(profileForm.email) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.email) }}
+            </small>
+        </div>
+    </div>
+    <div class="col">
+        <div class="md-form">
+            {{ form_label(profileForm.telephone) }}
+            {{ form_widget(profileForm.telephone) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.telephone) }}
+            </small>
+        </div>
+    </div>
+    <div class="col">
+        <div class="md-form">
+            {{ form_label(profileForm.password.first) }}
+            {{ form_widget(profileForm.password.first) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.password.first) }}
+            </small>
+        </div>
+        <div class="md-form">
+            {{ form_label(profileForm.password.second) }}
+            {{ form_widget(profileForm.password.second) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(profileForm.password.second) }}
+            </small>
+        </div>
+    </div>
 
-    <button class="btn">Enregistrer</button>
+        <div class="col">
+            <div class="">
+                {{ form_label(profileForm.city) }}
+
+                {{ form_widget(profileForm.city) }}
+            </div>
+        </div>
+
+
+
+    <button style="margin-top: 10px;" class="btn btn-primary">Enregistrer</button>
     {{ form_end(profileForm) }}
+</div>
 
 {% endblock %}
 

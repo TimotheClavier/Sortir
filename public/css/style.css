@@ -7,18 +7,10 @@
 }
 
 
-.profile{
-    width: 1000px!important;
-    height:700px!important;
-
+.btnEnregistrer{
+    margin-top: 50px!important;
 }
-
-.profileImage{
-    width:200px;
-    height: 200px;
-    margin-left:700px;
-    margin-top:50px;
-
-    position: absolute;
-    background-color: #0b51c5;
+.form-text ul {
+    padding: 0;
+    list-style-type: none;
 }

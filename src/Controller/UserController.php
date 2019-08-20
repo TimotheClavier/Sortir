@@ -73,9 +73,10 @@ class UserController extends Controller
     /**
      * @Route("/profile", name="app_profile")
      * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function profile(Request $request)
+    public function profile(Request $request,UserPasswordEncoderInterface $passwordEncoder)
     {
         $profile = new User();
         $profile = $this->getDoctrine()
@@ -104,13 +105,19 @@ class UserController extends Controller
             $profile->setEmail($form->get("email")->getData());
             $profile->setTelephone($form->get("telephone")->getData());
 
+            $profile->setPassword(
+                $passwordEncoder->encodePassword(
+                    $profile,
+                    $form->get('password')->getData()
+                )
+            );
+
             $city = new City();
             $city = $this->getDoctrine()
                 ->getRepository(City::class)
                 ->find($form->get("city")->getData());
 
             $profile->setCity($city);
-
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();

@@ -27,14 +27,14 @@ class RegistrationFormType extends AbstractType
                     'required'=>'required',
                     'autofocus'=>'autofocus'
                 ],
-                'label' => 'Nom :'
+                'label' => 'Nom'
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control ',
                     'required'=>'required'
                 ],
-                'label' => 'Prénom :'
+                'label' => 'Prénom'
             ])
             ->add('email', EmailType::class, [
                 'label' => 'E-mail :',
@@ -50,7 +50,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Erreur',
+                'invalid_message' => 'Les mots de passe fournis ne correspondent pas',
                 'required' => true,
                 'first_options' => array('attr' => ['class' => 'form-control col'],'label'=>'Mot de passe :'),
                 'second_options' => array('attr' => ['class' => 'form-control col'], 'label'=>'Confirmation :'),

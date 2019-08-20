@@ -28,6 +28,12 @@ class City
      */
     private $PostalCode;
 
+    /**
+     * @var User[]
+     * @ORM\OneToMany(targetEntity="User", mappedBy="city")
+     */
+    private $users;
+
 
     public function getId()
     {

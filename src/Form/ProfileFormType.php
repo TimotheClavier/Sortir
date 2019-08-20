@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\City;
 use App\Entity\User;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -35,7 +37,7 @@ class ProfileFormType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control ',
+                    'class' => 'form-control w-50',
                     'required'=>'required',
                     'autofocus'=>'autofocus',
                     'value' => $profile->getNom()
@@ -44,7 +46,7 @@ class ProfileFormType extends AbstractType
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control ',
+                    'class' => 'form-control  w-50',
                     'required'=>'required',
                     'value' => $profile->getPrenom()
 
@@ -54,7 +56,7 @@ class ProfileFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'E-mail :',
                 'attr' => [
-                    'class' => 'form-control col',
+                    'class' => 'form-control w-50',
                     'value' => $profile->getEmail()
 
                 ]
@@ -62,7 +64,7 @@ class ProfileFormType extends AbstractType
             ->add('telephone', TelType::class, [
                 'label' => 'Téléphone :',
                 'attr' => [
-                    'class' => 'form-control col',
+                    'class' => 'form-control w-50',
                     'value' => $profile->getTelephone()
 
                 ]
@@ -71,11 +73,11 @@ class ProfileFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Erreur',
                 'required' => false,
-                'first_options' => array('attr' => ['class' => 'form-control col'],'label'=>'Mot de passe :'),
-                'second_options' => array('attr' => ['class' => 'form-control col'], 'label'=>'Confirmation :'),
+                'first_options' => array('attr' => ['class' => 'form-control col w-50'],'label'=>'Mot de passe :'),
+                'second_options' => array('attr' => ['class' => 'form-control col w-50'], 'label'=>'Confirmation :'),
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control w-50'
                 ]
             ])
             ->add('city', ChoiceType::class, [
@@ -83,10 +85,11 @@ class ProfileFormType extends AbstractType
                 'choice_label' => "libelle",
                 "choice_value" => "id",
                 "attr" => [
-                    'class' =>"form-control col",
+                    'class' =>"form-control w-50",
                     'value' => $cities[$profile->getCity()->getId()]
                 ]
-            ]);
+            ])
+           ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

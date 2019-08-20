@@ -53,7 +53,13 @@ class User implements UserInterface
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="users")
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
      */
     private $city;
 
@@ -68,6 +74,12 @@ class User implements UserInterface
      * @JoinTable(name="users_trips")
      */
     private $trips;
+
+    /**
+     * @var Trip[]
+     * @ORM\OneToMany(targetEntity="Trip", mappedBy="organizer")
+     */
+    private $organisedTrips;
 
     public function getId()
     {
@@ -183,6 +195,25 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar(string $avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
     public function getCity()
     {
         return $this->city;
@@ -225,4 +256,31 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Trip[]
+     */
+    public function getOrganisedTrips()
+    {
+        return $this->organisedTrips;
+    }
+
+    /**
+     * @param Trip[] $organisedTrips
+     * @return User
+     */
+    public function setOrganisedTrips(array $organisedTrips)
+    {
+        $this->organisedTrips = $organisedTrips;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+      return $this->nom.' '.$this->prenom;
+    }
+
+
+
 }
