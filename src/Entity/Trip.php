@@ -243,4 +243,20 @@ class Trip
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCoverImage()
+    {
+        return $this->coverImage;
+    }
+
+    /**
+     * @param string $coverImage
+     */
+    public function setCoverImage($coverImage)
+    {
+        $this->coverImage = $coverImage;
+    }
 }

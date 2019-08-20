@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Situation;
 use App\Entity\Place;
 use App\Entity\Trip;
 use App\Form\TripType;
 use App\Repository\TripRepository;
+use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,8 @@ class TripController extends Controller
 {
     /**
      * @Route("/", name="trip_index", methods={"GET"})
+     * @param TripRepository $tripRepository
+     * @return Response
      */
     public function index(TripRepository $tripRepository): Response
     {
@@ -72,12 +76,24 @@ class TripController extends Controller
      */
     public function edit(Request $request, Trip $trip): Response
     {
-        $form = $this->createForm(TripType::class, $trip);
+        $status = $this->getDoctrine()->getRepository(Situation::class)->findAll();
+        $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
+
+        $form = $this->createForm(TripType::class, $trip,['status'=>$status,'places' => $places]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+
+            $upload = new UploadUtils();
+            $img = $form['coverImage']->getData();
+
+            if($img)
+            {
+                $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
+                $trip->setCoverImage('trips/'.$fileName);
+            }
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('trip_index');
         }
 

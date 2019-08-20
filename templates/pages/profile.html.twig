@@ -11,6 +11,7 @@
    margin-left:-150px;">
     <h1>Mon profil</h1>
 
+
     {{ form_start(profileForm) }}
     <div class="col">
         <div class="md-form">
@@ -66,14 +67,19 @@
         <div class="col">
             <div class="">
                 {{ form_label(profileForm.city) }}
-
                 {{ form_widget(profileForm.city) }}
             </div>
         </div>
 
+        <div class="col">
+            <div class="">
+                {{ form_label(profileForm.avatar) }}
+                {{ form_widget(profileForm.avatar) }}
+            </div>
+        </div>
 
 
-    <button style="margin-top: 10px;" class="btn btn-primary">Enregistrer</button>
+    <button style="margin-top: 10px;" class="btn btn-success">Enregistrer</button>
     {{ form_end(profileForm) }}
 </div>
 
