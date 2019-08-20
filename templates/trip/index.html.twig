@@ -15,7 +15,6 @@
                 <th>Seat</th>
                 <th>Duration</th>
                 <th>Description</th>
-                <th>Organizer</th>
                 <th>Status</th>
                 <th>Cause</th>
                 <th>actions</th>
@@ -31,8 +30,7 @@
                 <td>{{ trip.seat }}</td>
                 <td>{{ trip.duration }}</td>
                 <td>{{ trip.description }}</td>
-                <td>{{ trip.organizer }}</td>
-                <td>{{ trip.status }}</td>
+                <td>{{ trip.status.libelle }}</td>
                 <td>{{ trip.cause }}</td>
                 <td>
                     <a href="{{ path('trip_show', {'id': trip.id}) }}">show</a>
@@ -41,7 +39,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Situation;
+use App\Entity\Place;
 use App\Entity\Trip;
 use App\Form\TripType;
 use App\Repository\TripRepository;
@@ -31,7 +33,11 @@ class TripController extends Controller
     public function new(Request $request): Response
     {
         $trip = new Trip();
-        $form = $this->createForm(TripType::class, $trip);
+        $status = $this->getDoctrine()->getManager()
+            ->getRepository(Situation::class)->findAll();
+        $places = $this->getDoctrine()->getManager()
+            ->getRepository(Place::class)->findAll();
+        $form = $this->createForm(TripType::class, $trip,[ 'status' => $status , 'places' => $places]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

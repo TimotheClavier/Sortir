@@ -59,7 +59,7 @@ class Trip
      *
      * @ORM\Column(type="integer")
      * @OneToOne(targetEntity="Situation")
-     * @JoinColumn(name="situtation_id", referencedColumnName="id")
+     * @JoinColumn(name="status", referencedColumnName="id")
      */
     private $status;
 
