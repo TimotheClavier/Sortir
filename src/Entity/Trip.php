@@ -56,10 +56,8 @@ class Trip
     private $organizer;
 
     /**
-     *
-     * @ORM\Column(type="integer")
-     * @OneToOne(targetEntity="Situation")
-     * @JoinColumn(name="status", referencedColumnName="id")
+     * @var Situation
+     * @ManyToOne(targetEntity="Situation")
      */
     private $status;
 
@@ -70,10 +68,15 @@ class Trip
 
     /**
      * One Product has One Shipment.
-     * @OneToOne(targetEntity="Place")
-     * @JoinColumn(name="place_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Place")
      */
     private $place;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $coverImage;
 
     /**
      * User[]
@@ -165,7 +168,7 @@ class Trip
         return $this->status;
     }
 
-    public function setStatus(int $status)
+    public function setStatus(Situation $status)
     {
         $this->status = $status;
 

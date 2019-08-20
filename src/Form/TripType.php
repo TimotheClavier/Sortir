@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\Place;
+use App\Entity\Situation;
 use App\Entity\Trip;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,6 +34,9 @@ class TripType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'choices' => $options['status'],
                 'choice_label' => 'libelle',
+                'choice_value' => function (Situation $situation = null) {
+                    return $situation ? $situation->getId() : '';
+                },
                 'label' => 'Etat : ',
                 'attr' => [
                     'class' => 'browser-default'
@@ -40,10 +45,10 @@ class TripType extends AbstractType
             ->add('place', ChoiceType::class, [
                 'choices' => $options['places'],
                 'choice_label' => 'libelle',
-                'label' => 'Place : ',
-                'attr' => [
-                    'class' => 'browser-default'
-                ]
+                'choice_value' => function (Place $place = null) {
+                    return $place ? $place->getId() : '';
+                },
+                'label' => 'Place : '
             ])
         ;
     }
@@ -52,8 +57,8 @@ class TripType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'    => Trip::class,
-            'status'        => Situation::class,
-            'places'        => Place::class
+            'status'        => null,
+            'places'        => null
         ]);
     }
 }

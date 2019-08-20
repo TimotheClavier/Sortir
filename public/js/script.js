@@ -1,3 +1,3 @@
-$(document).ready(fonction(){
-    $('select').addClass('browser-default')
+$(document).ready( function() {
+  $('select').addClass('browser-default custom-select');
 })
