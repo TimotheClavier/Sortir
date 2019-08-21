@@ -103,6 +103,7 @@ class TripController extends Controller
         $user->addTrip($trip);
 
         $entityManager->flush();
+        $this->addFlash('Success', 'Vous êtes inscrit !!');
 
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
@@ -123,7 +124,6 @@ class TripController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $trip = $entityManager->getRepository(Trip::class)->find($trip);
 
-
         $user = $this->getUser();
 
         $rawSql = "DELETE FROM users_trips  WHERE user_id = :iduser AND trip_id = :idtrip";
@@ -135,6 +135,7 @@ class TripController extends Controller
         $trip->setSeat($trip->getSeat() + 1);
 
         $entityManager->flush();
+        $this->addFlash('Success', "Vous n'êtes plus inscrit !!");
 
         return $this->redirectToRoute('Index', []);
 
@@ -164,7 +165,7 @@ class TripController extends Controller
             if($img)
             {
                 $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
-                $trip->setCoverImage('trips/'.$fileName);
+                $trip->setCoverImage('img/trips/'.$fileName);
             }
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('Success', 'Modifications enregistrées !');

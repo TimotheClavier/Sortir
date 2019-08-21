@@ -52,6 +52,7 @@ class TripType extends AbstractType
                 'label' => 'Image : ',
                 'data_class' => null,
                 // make it optional so you don't have to re-upload the PDF file
+                'mapped' => false,
                 // everytime you edit the Product details
                 'required' => false,
 

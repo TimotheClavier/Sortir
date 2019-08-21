@@ -85,6 +85,7 @@ class ProfileFormType extends AbstractType
             ->add('avatar' ,FileType::class, [
                 'label' => 'Avatar : ',
                 'data_class' => null,
+                'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file
                 // everytime you edit the Product details
                 'required' => false,
