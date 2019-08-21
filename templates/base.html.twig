@@ -2,18 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
             <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/addons/datatables-select.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/addons/datatables.min.css') }}" rel="stylesheet">
             <link href="{{ asset('css/notiflix-1.8.0.min.css') }}" rel="stylesheet">
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+            <script src="{{ asset('js/notiflix-1.8.0.min.js') }}"></script>
         {% endblock %}
     </head>
     <body>
         {% include 'includes/nav.html.twig' %}
         <div class="container">
+            <script>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    Notiflix.Notify.{{ label }}('{{ message }}');
+                {% endfor %}
+            {% endfor %}
+            </script>
             {% block body %}
             {% endblock %}
         </div>
@@ -22,9 +33,12 @@
             <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
-            <script src="{{ asset('js/notiflix-1.8.0.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/addons/datatables-select.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/addons/datatables.min.js') }}"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
             <script src="{{ asset('js/script.js') }}"></script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLU9OvoTnTnEIJJdW0Y-goiv3mArDWRR4&callback=initMap"
+                    type="text/javascript"></script>
         {% endblock %}
     </body>
 </html>

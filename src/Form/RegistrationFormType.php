@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -48,6 +49,15 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-control col'
                 ]
             ])
+            ->add('city', ChoiceType::class, [
+                'choices'  => $options['cities'],
+                'choice_label' => "libelle",
+                "choice_value" => "id",
+                "attr" => [
+                    'class' =>"form-control w-50",
+                ],
+                'label' => 'Ville :'
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe fournis ne correspondent pas',
@@ -65,7 +75,8 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class'    => User::class,
+            'cities'        => City::class
         ]);
     }
 }

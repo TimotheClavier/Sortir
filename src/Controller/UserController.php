@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\ProfileFormType;
 use App\Form\RegistrationFormType;
 use App\Security\UserAuthenticator;
+use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,8 @@ class UserController extends Controller
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $cities = $this->getDoctrine()->getRepository(City::class)->findAll();
+        $form = $this->createForm(RegistrationFormType::class, $user,['cities' => $cities]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,6 +44,7 @@ class UserController extends Controller
             );
 
             $user->setActive(true);
+            $user->setAvatar('users/default.jpg');
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -78,10 +81,8 @@ class UserController extends Controller
      */
     public function profile(Request $request,UserPasswordEncoderInterface $passwordEncoder)
     {
-        $profile = new User();
-        $profile = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find(6);
+        $upload = new UploadUtils();
+        $profile = $this->getUser();
 
 
         $cities = $this->getDoctrine()
@@ -91,10 +92,8 @@ class UserController extends Controller
 
 
         $form = $this->createForm(ProfileFormType::class, $profile, array(
-            'action' => $this->generateUrl('app_profile'),
-            'method' => 'PUT',
-            'choices' => $profile,
-            'cities' => $cities,
+            'profile' => $profile,
+            'cities' => $cities
         ));
 
         $form->handleRequest($request);
@@ -111,6 +110,14 @@ class UserController extends Controller
                     $form->get('password')->getData()
                 )
             );
+            $img = $form['avatar']->getData();
+
+            if($img)
+            {
+                $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),$profile->getNom().'_'.$profile->getPrenom());
+                $profile->setAvatar('users/'.$fileName);
+            }
+
 
             $city = new City();
             $city = $this->getDoctrine()
