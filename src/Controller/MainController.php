@@ -4,16 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Repository\TripRepository;
-use App\Repository\UserRepository;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Constraints\Date;
-use Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Configuration;
 
 class MainController extends Controller
 {
@@ -23,7 +19,7 @@ class MainController extends Controller
      * @param TripRepository $tripRepository
      * @param EntityManagerInterface $em
      * @return Response
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
     public function index(AuthenticationUtils $authenticationUtils, TripRepository $tripRepository, EntityManagerInterface $em)
     {
@@ -41,7 +37,6 @@ class MainController extends Controller
 
             $userTrips = $stmt->fetchAll();
 
-            dump(count($trips[0]->getUsers()));
             return $this->render('index.html.twig', [
                 'trips' => $trips,
                 'userTrips' => $userTrips,

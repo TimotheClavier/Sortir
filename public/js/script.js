@@ -10,12 +10,10 @@ $(document).ready( function() {
   $('#data-table-city').DataTable();
   $('.dataTables_length').addClass('bs-select');
 
-  $(".button-collapse").sideNav();
-// SideNav Scrollbar Initialization
-  var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-  var ps = new PerfectScrollbar(sideNavScrollbar);
   Notiflix.Confirm.Init();
-  Notiflix.Notify.Init({});
+  Notiflix.Notify.Init({
+    position: 'right-bottom'
+  });
 })
 
 function eventConfirm() {
@@ -26,6 +24,32 @@ function eventConfirm() {
     'Non',
     function() {
       $('#form_delete_trip').submit();
+    }
+  );
+}
+
+function placeConfirm() {
+  Notiflix.Confirm.Show(
+    'Attention',
+    'Voulez vous vraiment supprimer ce site ?' +
+        'Toutes les sorties sur ce site seront supprimmer également.',
+    'Oui',
+    'Non',
+    function() {
+      $('#form_delete_place').submit();
+    }
+  );
+}
+
+function cityConfirm() {
+  Notiflix.Confirm.Show(
+    'Attention',
+    'Voulez vous vraiment supprimer ce site ?' +
+    'Toutes les sorties de cette ville seront supprimmer également.',
+    'Oui',
+    'Non',
+    function() {
+      $('#form_delete_city').submit();
     }
   );
 }

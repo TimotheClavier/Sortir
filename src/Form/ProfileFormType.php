@@ -64,7 +64,7 @@ class ProfileFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Erreur',
+                'invalid_message' => 'Erreur les mot de passe ne corréspondent pas',
                 'required' => false,
                 'first_options' => array('attr' => ['class' => 'form-control col w-50'],'label'=>'Mot de passe :'),
                 'second_options' => array('attr' => ['class' => 'form-control col w-50'], 'label'=>'Confirmation :'),

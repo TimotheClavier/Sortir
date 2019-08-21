@@ -1,4 +1,32 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Villes</h3>
+        <div class="card-text">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-12">
+                    <div class="md-form">
+                        {{ form_label(form.libelle) }}
+                        {{ form_widget(form.libelle) }}
+                        <small class="form-text text-danger mb-4">
+                            {{ form_errors(form.libelle) }}
+                        </small>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="md-form">
+                        {{ form_label(form.PostalCode) }}
+                        {{ form_widget(form.PostalCode) }}
+                        <small class="form-text text-danger mb-4">
+                            {{ form_errors(form.PostalCode) }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success">Confirmer</button>
+            <a href="{{ path('city_index') }}" class="btn btn-primary">Retour</a>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+</div>

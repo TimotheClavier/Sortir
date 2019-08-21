@@ -3,28 +3,23 @@
 {% block title %}City{% endblock %}
 
 {% block body %}
-    <h1>City</h1>
+    <div class="card card-cascade wider">
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ city.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ city.libelle }}</td>
-            </tr>
-            <tr>
-                <th>PostalCode</th>
-                <td>{{ city.PostalCode }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('city_index') }}">back to list</a>
-
-    <a href="{{ path('city_edit', {'id': city.id}) }}">edit</a>
-
-    {{ include('city/_delete_form.html.twig') }}
+            <!-- Title -->
+            <h4 class="card-title"><strong>{{ city.libelle }}</strong></h4>
+            <!-- Text -->
+            <h6 class="card-subtitle">{{ city.postalCode }}</h6>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-lg-4 col-sm-6">
+            <a href="{{ path('city_index') }}" class="btn btn-primary">Retour</a>
+            <a href="{{ path('city_edit', {'id': city.id}) }}" class="btn btn-outline-success">Modifier</a>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+            {{ include('city/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

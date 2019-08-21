@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('trip_delete', {'id': trip.id}) }}" id="form_delete_trip">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
-    <a class="btn btn-danger" onclick="eventConfirm()">Delete</a>
+    <a class="btn btn-danger" onclick="eventConfirm()">Supprimer</a>
 </form>

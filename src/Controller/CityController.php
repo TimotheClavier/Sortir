@@ -38,6 +38,7 @@ class CityController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($city);
             $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
 
             return $this->redirectToRoute('city_index');
         }
@@ -68,7 +69,7 @@ class CityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('Success', 'Modifications enregistrées !');
             return $this->redirectToRoute('city_index');
         }
 
@@ -87,6 +88,7 @@ class CityController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($city);
             $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
         }
 
         return $this->redirectToRoute('city_index');

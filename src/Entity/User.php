@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -68,6 +69,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+     * @JoinColumn(nullable=true, name="city_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $city;
 
@@ -204,7 +206,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return string?
      */
     public function getAvatar()
     {
@@ -212,10 +214,10 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $avatar
+     * @param $avatar
      * @return User
      */
-    public function setAvatar(string $avatar)
+    public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
 

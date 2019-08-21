@@ -41,6 +41,13 @@ class City
      */
     private $users;
 
+    /**
+     * @var Place[]
+     * @ORM\OneToMany(targetEntity="Place", mappedBy="city", cascade={"remove"})
+     */
+    private $places;
+
+
 
     public function getId()
     {

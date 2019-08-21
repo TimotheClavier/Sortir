@@ -38,6 +38,7 @@ class PlaceController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($place);
             $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
 
             return $this->redirectToRoute('place_index');
         }
@@ -68,7 +69,7 @@ class PlaceController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('Success', 'Modifications enregistrées !');
             return $this->redirectToRoute('place_index');
         }
 
@@ -87,6 +88,7 @@ class PlaceController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($place);
             $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
         }
 
         return $this->redirectToRoute('place_index');

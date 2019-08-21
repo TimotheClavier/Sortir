@@ -97,7 +97,6 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $img = $form['avatar']->getData();
 
             if($img)

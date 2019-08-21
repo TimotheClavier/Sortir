@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -49,11 +50,16 @@ class Place
 
 
     /**
-     * One Product has One Shipment.
-     * @OneToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
      * @JoinColumn(name="city_id", referencedColumnName="id")
      */
     private $city;
+
+    /**
+     * @var Trip[]
+     * @ORM\OneToMany(targetEntity="Trip", mappedBy="place", cascade={"remove"})
+     */
+    private $trips;
 
 
     public function getId()
@@ -123,4 +129,21 @@ class Place
     {
         $this->city = $city;
     }
+
+    /**
+     * @return Trip[]
+     */
+    public function getTrips(): array
+    {
+        return $this->trips;
+    }
+
+    /**
+     * @param Trip[] $trips
+     */
+    public function setTrips(array $trips)
+    {
+        $this->trips = $trips;
+    }
+
 }

@@ -56,7 +56,9 @@ class TripController extends Controller
             $entityManager->persist($trip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trip_index');
+            $this->addFlash('Success', 'Modifications enregistrées !');
+
+            return $this->redirectToRoute('Index');
         }
 
         return $this->render('trip/new.html.twig', [
@@ -166,8 +168,10 @@ class TripController extends Controller
                 $trip->setCoverImage('img/trips/'.$fileName);
             }
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
 
-            return $this->redirectToRoute('trip_index');
+
+            return $this->redirectToRoute('Index');
         }
 
         return $this->render('trip/edit.html.twig', [
@@ -188,6 +192,7 @@ class TripController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trip);
             $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
         }
 
         return $this->redirectToRoute('trip_index');
