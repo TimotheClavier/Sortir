@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -250,6 +251,18 @@ class Trip
 
         return $this;
     }
+
+    /**
+     * @param $user
+     * @return Trip
+     */
+    public function addUser($user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
 
     /**
      * @return string

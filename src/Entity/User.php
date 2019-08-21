@@ -266,6 +266,30 @@ class User implements UserInterface
     }
 
     /**
+     * @param $trip
+     * @return User
+     */
+    public function addTrip($trip)
+    {
+        $this->trips[] = $trip;
+
+        return $this;
+    }
+
+    /**
+     * @param $trip
+     */
+    public function removeTrip($trip)
+    {
+        foreach ($this->trips as $tr){
+            if($tr == $trip){
+                $tr = null;
+            }
+        }
+    }
+
+
+    /**
      * @return Trip[]
      */
     public function getOrganisedTrips()
