@@ -101,6 +101,7 @@ class TripController extends Controller
         $user->addTrip($trip);
 
         $entityManager->flush();
+        $this->addFlash('inscrit', 'Vous êtes inscrit !!');
 
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
@@ -121,7 +122,6 @@ class TripController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $trip = $entityManager->getRepository(Trip::class)->find($trip);
 
-
         $user = $this->getUser();
 
         $rawSql = "DELETE FROM users_trips  WHERE user_id = :iduser AND trip_id = :idtrip";
@@ -133,6 +133,7 @@ class TripController extends Controller
         $trip->setSeat($trip->getSeat() + 1);
 
         $entityManager->flush();
+        $this->addFlash('desincrit', "Vous n'êtes plus inscrit !!");
 
         return $this->redirectToRoute('Index', []);
 
