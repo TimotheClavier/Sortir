@@ -76,7 +76,7 @@ class Trip
 
     /**
      * One Product has One Shipment.
-     * @ManyToOne(targetEntity="Place")
+     * @ManyToOne(targetEntity="Place", inversedBy="trips")
      */
     private $place;
 
@@ -279,4 +279,5 @@ class Trip
     {
         $this->coverImage = $coverImage;
     }
+
 }

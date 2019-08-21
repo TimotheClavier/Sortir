@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,20 +19,16 @@ class TripType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('tripDate', DateTimeType::class,[
-                'attr' => [
-                    'class' => 'browser-default'
-                ]
-            ])
-            ->add('inscriptionDate' ,DateTimeType::class,[
-                'attr' => [
-                    'class' => 'browser-default'
-                ]
-
-    ])
+            ->add('tripDate', DateTimeType::class)
+            ->add('inscriptionDate' ,DateTimeType::class)
             ->add('seat')
             ->add('duration')
-            ->add('description')
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'attr' => [
+                    'class' => 'md-textarea form-control'
+                ]
+            ])
             ->add('status', ChoiceType::class, [
                 'choices' => $options['status'],
                 'choice_label' => 'libelle',

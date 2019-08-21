@@ -110,16 +110,14 @@ class UserController extends Controller
                     $form->get('password')->getData()
                 )
             );
+            dump($profile);
             $img = $form['avatar']->getData();
 
-            if($img)
-            {
+            if($img !== null) {
                 $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),$profile->getNom().'_'.$profile->getPrenom());
                 $profile->setAvatar('users/'.$fileName);
             }
 
-
-            $city = new City();
             $city = $this->getDoctrine()
                 ->getRepository(City::class)
                 ->find($form->get("city")->getData());
@@ -128,6 +126,8 @@ class UserController extends Controller
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+
+            $this->addFlash('Success', 'Modifications enregistrées !');
 
             return $this->redirectToRoute('app_profile');
 

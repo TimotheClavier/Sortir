@@ -40,7 +40,6 @@ class MainController extends Controller
             $stmt->execute(array('iduser' => $user->getId()));
 
             $userTrips = $stmt->fetchAll();
-            dump(count($trips[0]->getUsers()));
             return $this->render('index.html.twig', [
                 'trips' => $trips,
                 'userTrips' => $userTrips,

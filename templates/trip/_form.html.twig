@@ -1,4 +1,87 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <div class="md-form">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.name) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            {{ form_label(form.tripDate) }}
+            {{ form_widget(form.tripDate) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.tripDate) }}
+            </small>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            {{ form_label(form.inscriptionDate) }}
+            {{ form_widget(form.inscriptionDate) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.inscriptionDate) }}
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <div class="md-form">
+                {{ form_label(form.seat) }}
+                {{ form_widget(form.seat) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.seat) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div class="md-form">
+                {{ form_label(form.duration) }}
+                {{ form_widget(form.duration) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.duration) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            {{ form_label(form.status) }}
+            {{ form_widget(form.status) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.status) }}
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="md-form">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.description) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            {{ form_label(form.place) }}
+            {{ form_widget(form.place) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.place) }}
+            </small>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_label(form.coverImage) }}
+            {{ form_widget(form.coverImage) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.coverImage) }}
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-success">Confirmer</button>
+            <a href="{{ path('Index') }}" class="btn btn-outline-primary">Retour</a>
+        </div>
+    </div>
 {{ form_end(form) }}
