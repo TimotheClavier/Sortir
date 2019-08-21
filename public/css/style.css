@@ -22,3 +22,12 @@
     border-radius: .25rem;
     box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
 }
+
+.card-full-width {
+    width: 90vw;
+    height: 35vh;
+}
+
+.character-counter {
+    display: none;
+}

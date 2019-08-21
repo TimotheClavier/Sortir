@@ -7,6 +7,7 @@ $(document).ready( function() {
     content: function () { return '<img src="' + $(this).data('img') + '" />'; }
   });
   $('#data-table-place').DataTable();
+  $('#data-table-city').DataTable();
   $('.dataTables_length').addClass('bs-select');
 
   $(".button-collapse").sideNav();
@@ -14,19 +15,21 @@ $(document).ready( function() {
   var sideNavScrollbar = document.querySelector('.custom-scrollbar');
   var ps = new PerfectScrollbar(sideNavScrollbar);
   Notiflix.Confirm.Init();
+  Notiflix.Notify.Init({});
 })
 
 function eventConfirm() {
   Notiflix.Confirm.Show(
-    'Notiflix Confirm',
-    'Do you agree with me?',
-    'Yes',
-    'No',
+    'Attention',
+    'Voulez vous vraiment supprimer cette sortie ?',
+    'Oui',
+    'Non',
     function() {
-      return true;
-    },
-    function() {
-      return false;
+      $('#form_delete_trip').submit();
     }
   );
+}
+
+function notifyError( message ) {
+  Notiflix.Notify.Failure(message);
 }

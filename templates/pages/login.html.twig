@@ -5,14 +5,11 @@
 
 {% block body %}
     {% if error %}
-        <div class="row justify-content-center">
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        </div>
+        <script>Notiflix.Notify.Failure("{{ error.messageKey|trans(error.messageData, 'security') }}")</script>
     {% endif %}
     <div class="row justify-content-center center-row">
         <div class="col-4">
             <div class="card">
-
                 <h5 class="card-header success-color-dark white-text text-center py-4">
                     <strong>Sign in</strong>
                 </h5>
