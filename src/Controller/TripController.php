@@ -101,7 +101,7 @@ class TripController extends Controller
         $user->addTrip($trip);
 
         $entityManager->flush();
-        $this->addFlash('inscrit', 'Vous êtes inscrit !!');
+        $this->addFlash('Success', 'Vous êtes inscrit !!');
 
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
@@ -133,7 +133,7 @@ class TripController extends Controller
         $trip->setSeat($trip->getSeat() + 1);
 
         $entityManager->flush();
-        $this->addFlash('desincrit', "Vous n'êtes plus inscrit !!");
+        $this->addFlash('Success', "Vous n'êtes plus inscrit !!");
 
         return $this->redirectToRoute('Index', []);
 
