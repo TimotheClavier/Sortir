@@ -5,13 +5,14 @@
 {% block body %}
     <div class="row my-4">
     {% for trip in trips %}
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2">
         <div class="card card-cascade narrower">
 
             <!-- Card image -->
             <div class="view view-cascade overlay">
-                <img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg" alt="Card image cap">
-                <a>
+                <img  class="card-img-top" src="{{ asset(trip.coverImage) }}" alt="Card image cap"
+                    width="300" height="150">
+                <a href="{{ path('trip_show', { 'id': trip.id }) }}">
                     <div class="mask rgba-white-slight"></div>
                 </a>
             </div>
@@ -21,23 +22,35 @@
 
                 <!-- Label -->
                 <div class="progress md-progress" style="height: 20px">
-                    <div class="progress-bar bg-success" role="progressbar"
-                         style="width: {{ (trip.users|length / trip.seat)|round }}%;
-                                 height: 20px" aria-valuenow="{{ (trip.users|length / trip.seat)|round }}" aria-valuemin="0" aria-valuemax="{{ trip.seat }}">
-                        {{ (trip.users|length / trip.seat * 100)|round }}%
+                    <div class="progress md-progress material-tooltip-main" style="height: 20px"
+                         data-toggle="popover-hover" title="Places disponible"
+                         data-content="Il y'a {{ trip.seat }} places pour cette évenement.">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: {{ (trip.users|length / trip.seat * 100 ) }}%;
+                                     height: 20px"
+                             aria-valuenow="{{ (trip.users|length / trip.seat * 100) }}"
+                             aria-valuemin="0" aria-valuemax="{{ trip.seat }}">
+                            {{ (trip.users|length / trip.seat * 100)|round }}%
+                        </div>
                     </div>
                 </div>
                 <!-- Title -->
-                <h4 class="font-weight-bold card-title">{{ trip.name }}</h4>
+                <h4 class="font-weight-bold card-title">{{ trip.name }}
+                    {% if trip.organizer.id == app.user.id %}
+                        <i class="fas fa-user"></i>
+                    {% endif %}
+                </h4>
                 <!-- Text -->
                 <p class="card-text text-truncate">{{ trip.description }}</p>
                 <div class="container">
                 <div class="row justify-content-between">
-                    <div class="col-lg-6 col-md-12">
-                        <a class="btn btn-outline-success" href="{{ path('trip_show', { 'id': trip.id }) }}">S'inscrire</a>
-                    </div>
                     <div class="col-lg-6 col-sm-12">
                         <a class="btn btn-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        {% if date(trip.inscriptionDate) > date()  %}
+                            <a class="btn btn-outline-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Go</a>
+                        {% endif %}
                     </div>
                 </div>
                 </div>

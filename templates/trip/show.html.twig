@@ -9,8 +9,8 @@
 
             <!-- Card image -->
             <div class="view view-cascade overlay">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="Card image cap">
-                <a >
+                <img class="card-img-top card-full-width" src="{{ asset(trip.coverImage) }}" alt="Card image cap">
+                <a>
                     <div class="mask rgba-white-slight"></div>
                 </a>
             </div>
@@ -56,10 +56,14 @@
                 <div class="row justify-content-between">
                     <div class="col-lg-4 col-sm-6">
                         <a class="btn btn-primary" href="{{ path('Index') }}">Retour</a>
-                        <a class="btn btn-outline-success" href="{{ path('trip_edit', {'id': trip.id}) }}">edit</a>
+                        {% if trip.organizer.id == app.user.id %}
+                            <a class="btn btn-outline-success" href="{{ path('trip_edit', {'id': trip.id}) }}">Modifier</a>
+                        {% endif %}
                     </div>
                     <div class="col-lg-2 col-sm-6">
-                        {{ include('trip/_delete_form.html.twig') }}
+                        {% if trip.organizer.id == app.user.id %}
+                            {{ include('trip/_delete_form.html.twig') }}
+                        {% endif %}
                     </div>
                 </div>
                 </div>
