@@ -243,4 +243,27 @@ class Trip
 
         return $this;
     }
+
+    /**
+     * @param $user
+     * @return Trip
+     */
+    public function addUser($user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * @param $user
+     */
+    public function removeUser($user)
+    {
+        foreach ($this->users as $us){
+            if($us == $user){
+                $us = null;
+            }
+        }
+    }
 }

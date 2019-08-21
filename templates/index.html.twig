@@ -34,8 +34,10 @@
                 <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-lg-6 col-md-12">
-                        <a class="btn btn-outline-success" href="{{ path('trip_show', { 'id': trip.id }) }}">S'inscrire</a>
-                    </div>
+       {%  if( userTrips[loop.index0].trip_id|default(null) == trip.id) %}<a class="btn btn-outline-success" href="{{ path('trip_cancel', { 'id': trip.id }) }}">Se désincrire</a>{% else %}
+           {% if trip.inscriptionDate > date %}<a class="btn btn-outline-success" href="{{ path('trip_registration', { 'id': trip.id }) }}">S'inscrire</a>{% endif %}{% endif %}
+
+        </div>
                     <div class="col-lg-6 col-sm-12">
                         <a class="btn btn-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
                     </div>
