@@ -91,7 +91,7 @@ class TripController extends Controller
             if($img)
             {
                 $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
-                $trip->setCoverImage('trips/'.$fileName);
+                $trip->setCoverImage('img/trips/'.$fileName);
             }
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('trip_index');

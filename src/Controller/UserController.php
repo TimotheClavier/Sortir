@@ -81,57 +81,45 @@ class UserController extends Controller
      */
     public function profile(Request $request,UserPasswordEncoderInterface $passwordEncoder)
     {
-        $upload = new UploadUtils();
-        $profile = $this->getUser();
 
+        $upload = new UploadUtils();
+        $user = $this->getUser();
 
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
 
-
-
-        $form = $this->createForm(ProfileFormType::class, $profile, array(
-            'profile' => $profile,
+        $form = $this->createForm(ProfileFormType::class, $user, array(
+            'profile' => $user,
             'cities' => $cities
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $profile->setNom($form->get("nom")->getData());
-            $profile->setPrenom($form->get("prenom")->getData());
-            $profile->setEmail($form->get("email")->getData());
-            $profile->setTelephone($form->get("telephone")->getData());
 
-            $profile->setPassword(
-                $passwordEncoder->encodePassword(
-                    $profile,
-                    $form->get('password')->getData()
-                )
-            );
             $img = $form['avatar']->getData();
 
             if($img)
             {
-                $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),$profile->getNom().'_'.$profile->getPrenom());
-                $profile->setAvatar('users/'.$fileName);
+                $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),$user->getNom().'_'.$user->getPrenom());
+                $user->setAvatar('img/users/'.$fileName);
             }
 
-
-            $city = new City();
             $city = $this->getDoctrine()
                 ->getRepository(City::class)
                 ->find($form->get("city")->getData());
 
-            $profile->setCity($city);
+            $user->setCity($city);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            $this->addFlash('Success','Modifications enregistrées !');
 
             return $this->redirectToRoute('app_profile');
-
         }
+
 
         return $this->render('pages/profile.html.twig', [
             'profileForm' => $form->createView(),
