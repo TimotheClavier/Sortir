@@ -41,9 +41,11 @@
                                 <a href="{{ path('trip_show', {'id': trip.id}) }}">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                {% if trip.status.id != 6 %}
                                 <a  class="red-text" data-toggle="modal" data-target="#basicExampleModal{{ trip.id }}">
                                     <i class="fas fa-ban"></i> Annuler
                                 </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

@@ -157,7 +157,7 @@ class TripController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
         $this->addFlash('Success', 'Modifications enregistrées !');
-        return $this->redirectToRoute('trip_index');
+        return $this->redirectToRoute('Index');
     }
 
 
