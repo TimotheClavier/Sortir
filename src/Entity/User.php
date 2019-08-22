@@ -3,16 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
 class User implements UserInterface
 {
@@ -30,6 +33,11 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="l'e-mail ne peut être vide")
+     * @Assert\Length(
+     *     min="5", minMessage="l'e-mail doit faire plus de 5 caractère",
+     *     max="50", maxMessage="l'e-mail ne doit pas faire plus de 50 caractères"
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -40,23 +48,38 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank(message="le mot de passe ne peut être vide")
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @Assert\NotBlank(message="le prénom ne peut être vide")
+     * @Assert\Length(
+     *     min="3", minMessage="le prénom doit faire plus de 3 caractère",
+     *     max="25", maxMessage="le prénom ne doit pas faire plus de 25 caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
+     * @Assert\NotBlank(message="le nom ne peut être vide")
+     * @Assert\Length(
+     *     min="3", minMessage="le nom doit faire plus de 3 caractère",
+     *     max="25", maxMessage="le nom ne doit pas faire plus de 25 caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message="le numéro ne peut être vide")
+     * @Assert\Length(
+     *     min="10", max="10", exactMessage="le numéro doit faire exactement 10 caractères"
+     * )
+     * @ORM\Column(type="string", nullable=true)
      */
     private $telephone;
 
@@ -68,6 +91,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+     * @JoinColumn(nullable=true, name="city_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $city;
 
@@ -204,7 +228,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return string?
      */
     public function getAvatar()
     {
@@ -212,10 +236,10 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $avatar
+     * @param $avatar
      * @return User
      */
-    public function setAvatar(string $avatar)
+    public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
 

@@ -9,6 +9,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,21 +20,41 @@ class TripType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('tripDate', DateTimeType::class,[
+            ->add('name', TextType::class, [
+                'label' => 'Nom',
                 'attr' => [
-                    'class' => 'browser-default'
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('inscriptionDate' ,DateTimeType::class,[
-                'attr' => [
-                    'class' => 'browser-default'
+            ->add('tripDate', DateTimeType::class, [
+                'label' => 'Date'
+            ])
+            ->add('inscriptionDate' ,DateTimeType::class, [
+                'label' => 'Date d\'inscription',
+                'attr'   => [
+                    'min' => ( new \DateTime() )->format('Y-m-d H:i:s')
                 ]
-
-    ])
-            ->add('seat')
-            ->add('duration')
-            ->add('description')
+            ])
+            ->add('seat', NumberType::class, [
+                'label' => 'Places',
+                'invalid_message' => 'Places incorrect',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('duration', NumberType::class, [
+                'label' => 'Durée (en minutes)',
+                'invalid_message' => 'La durée est incorrect',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'attr' => [
+                    'class' => 'md-textarea form-control'
+                ]
+            ])
             ->add('status', ChoiceType::class, [
                 'choices' => $options['status'],
                 'choice_label' => 'libelle',
