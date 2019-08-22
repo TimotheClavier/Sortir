@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('user_delete', {'id': user.id}) }}" id="form_delete_user{{ user.id }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+    <a class="red-text" onclick="userConfirm({{ user.id }})"><i class="fas fa-trash"></i></a>
+</form>

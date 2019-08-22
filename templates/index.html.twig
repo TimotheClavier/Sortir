@@ -44,19 +44,17 @@
                         <p class="card-text text-truncate">{{ trip.description }}</p>
                         <div class="container">
                             <div class="row justify-content-between">
+                                <div class="col-lg-6 col-sm-12">
+                                    <a class="btn btn-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
+                                </div>
                                 <div class="col-lg-6 col-md-12">
                                     {% if( userTrips[loop.index0].trip_id|default(null) == trip.id) %}<a
                                         class="btn btn-outline-success"
-                                        href="{{ path('trip_cancel', { 'id': trip.id }) }}"><i
+                                        href="{{ path('trip_unsubscrib', { 'id': trip.id }) }}"><i
                                                 class="fas fa-calendar-times"></i></a>{% else %}
                                         {% if trip.inscriptionDate > date %}<a class="btn btn-outline-success"
                                                                                href="{{ path('trip_registration', { 'id': trip.id }) }}">
                                                 <i class="fas fa-calendar-check"></i></a>{% endif %}{% endif %}
-                                </div>
-                                <div class="col-lg-6 col-sm-12">
-                                    {% if date(trip.inscriptionDate) > date() %}
-                                        <a class="btn btn-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

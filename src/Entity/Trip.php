@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -34,7 +33,7 @@ class Trip
      * @Assert\NotBlank(message="le nom ne peut être vide")
      * @Assert\Length(
      *     min="5", minMessage="le nom doit faire plus de 5 caractère",
-     *     max="55", maxMessage="le nom ne doit pas faire plus de 55 caractères"
+     *     max="20", maxMessage="le nom ne doit pas faire plus de 55 caractères"
      * )
      * @ORM\Column(type="string", length=255)
      */

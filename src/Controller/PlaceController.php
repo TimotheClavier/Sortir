@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/place")
+ * @Route("/sites")
  */
 class PlaceController extends Controller
 {
     /**
      * @Route("/", name="place_index", methods={"GET"})
+     * @param PlaceRepository $placeRepository
+     * @return Response
      */
     public function index(PlaceRepository $placeRepository): Response
     {
@@ -27,6 +29,8 @@ class PlaceController extends Controller
 
     /**
      * @Route("/new", name="place_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -61,6 +65,9 @@ class PlaceController extends Controller
 
     /**
      * @Route("/{id}/edit", name="place_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Place $place
+     * @return Response
      */
     public function edit(Request $request, Place $place): Response
     {
@@ -81,6 +88,9 @@ class PlaceController extends Controller
 
     /**
      * @Route("/{id}", name="place_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Place $place
+     * @return Response
      */
     public function delete(Request $request, Place $place): Response
     {

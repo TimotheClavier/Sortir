@@ -92,3 +92,7 @@
 #profil-modal {
     min-width: 70vw;
 }
+
+.table {
+    white-space: nowrap;
+}

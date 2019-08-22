@@ -73,15 +73,7 @@ class ProfileFormType extends AbstractType
                     'class' => 'form-control w-50'
                 ]
             ])
-            ->add('city', ChoiceType::class, [
-                'choices'  => $options['cities'],
-                'choice_label' => "libelle",
-                "choice_value" => "id",
-                "attr" => [
-                    'class' =>"form-control w-50",
-                    'value' => $profile->getCity()->getLibelle()
-                ]
-            ])
+            ->add('city')
             ->add('avatar' ,FileType::class, [
                 'label' => 'Avatar : ',
                 'data_class' => null,

@@ -48,7 +48,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank(message="le mot de passe ne peut être vide")
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -76,9 +75,6 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="le numéro ne peut être vide")
-     * @Assert\Length(
-     *     min="10", max="10", exactMessage="le numéro doit faire exactement 10 caractères"
-     * )
      * @ORM\Column(type="string", nullable=true)
      */
     private $telephone;

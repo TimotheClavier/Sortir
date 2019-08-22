@@ -56,14 +56,15 @@
                 </div>
                 <div class="row justify-content-between">
                     <div class="col-lg-4 col-sm-6">
-                        <a class="btn btn-primary" href="{{ path('Index') }}">Retour</a>
+                        <a class="btn btn-primary" href="{{ app.request.headers.get('referer') }}">Retour</a>
                         {% if trip.organizer.id == app.user.id %}
                             <a class="btn btn-outline-success"
-                               href="{{ path('trip_edit', {'id': trip.id}) }}">Modifier</a>
+                               href="{{ path('trip_edit', {'id': trip.id}) }}">
+                            </a>
                         {% else %}
                             {% if app.user in trip.users %}
                                 <a class="btn btn-outline-success"
-                                   href="{{ path('trip_cancel', { 'id': trip.id }) }}">
+                                   href="{{ path('trip_unsubscrib', { 'id': trip.id }) }}">
                                     <i class="fas fa-calendar-times"></i>
                                 </a>
                             {% else %}

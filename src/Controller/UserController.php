@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\User;
 use App\Form\ProfileFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,11 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
 {
 
+    /**
+     * @Route("/utilisateurs/index", name="user_index")
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function index(UserRepository $userRepository): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }
     /**
      * @Route("/register", name="app_register")
      * @param Request $request
@@ -45,6 +56,7 @@ class UserController extends Controller
 
             $user->setActive(true);
             $user->setAvatar('img/users/default.jpg');
+            $user->setRoles(['ROLE_USER']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -81,9 +93,39 @@ class UserController extends Controller
      */
     public function profile(Request $request,UserPasswordEncoderInterface $passwordEncoder)
     {
-
-        $upload = new UploadUtils();
         $user = $this->getUser();
+        $form = $this->createUserForm($user, $request);
+        dump($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('app_profile');
+        } else {
+            return $this->render('pages/profile.html.twig', [
+                'profileForm' => $form->createView(),
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/utilisateurs/new", name="user_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function new(Request $request): Response
+    {
+        $user = new User();
+        $form = $this->createUserForm($user, $request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('user_index');
+        } else {
+            return $this->render('pages/profile.html.twig', [
+                'profileForm' => $form->createView(),
+            ]);
+        }
+    }
+
+    public function createUserForm(User $user, Request $request)
+    {
+        $upload = new UploadUtils();
 
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
@@ -116,25 +158,55 @@ class UserController extends Controller
             $entityManager->flush();
             $this->addFlash('Success','Modifications enregistrées !');
 
-            return $this->redirectToRoute('app_profile');
+            return $form;
         }
 
 
-        return $this->render('pages/profile.html.twig', [
-            'profileForm' => $form->createView(),
-        ]);
+        return $form;
     }
-
 
     /**
      * @Route("/profile/{id}", name="user_show", methods={"GET"})
      * @param User $user
      * @return Response
      */
-    public function show(User $user): Response
+    public function show(User $user)
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @Route("/utilisateurs/delete/{id}", name="user_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function delete(Request $request, User $user)
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+            $this->addFlash('Success', 'Modifications enregistrées !');
+        }
+
+        return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route("/utilisateurs/lock/{id}", name="user_lock")
+     * @param User $user
+     * @return Response
+     */
+    public function lock(User $user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user->setActive(!$user->getActive());
+        $entityManager->flush();
+        $this->addFlash('Success', 'Modifications enregistrées !');
+
+        return $this->redirectToRoute('user_index');
     }
 }

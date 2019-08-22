@@ -1,0 +1,5 @@
+{% if user.active %}
+    <a href="{{ path('user_lock', {'id': user.id}) }}"><i class="fas fa-lock-open"></i></a>
+{% else %}
+    <a href="{{ path('user_lock', {'id': user.id}) }}"><i class="fas fa-lock"></i></a>
+{% endif %}
