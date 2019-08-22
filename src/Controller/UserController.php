@@ -44,7 +44,7 @@ class UserController extends Controller
             );
 
             $user->setActive(true);
-            $user->setAvatar('users/default.jpg');
+            $user->setAvatar('img/users/default.jpg');
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -122,6 +122,19 @@ class UserController extends Controller
 
         return $this->render('pages/profile.html.twig', [
             'profileForm' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/profile/{id}", name="user_show", methods={"GET"})
+     * @param User $user
+     * @return Response
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
         ]);
     }
 }

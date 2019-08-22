@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - Sortir.eni{% endblock %}
+
+
+{% block body %}
+    <h1>Profile de {{ user.nom }} {{ user.prenom }}</h1>
+    <div class="row">
+        <div class="col-6">
+            <div class="md-form">
+                <p>Nom : {{ user.nom }} </p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="md-form">
+               <p>Prénom : {{ user.prenom }} </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="md-form">
+                <p> Email : {{ user.email }} </p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="md-form">
+                <p> Téléphone : {{ user.telephone }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="">
+                <p>Ville : {{ user.city.libelle }}</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="">
+               <img src="{{ asset(user.avatar) }}"></imgW>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
