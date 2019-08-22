@@ -3,10 +3,52 @@
 {% block title %}Sortir.eni{% endblock %}
 
 {% block body %}
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <div class="form-check w-25">
+            <input type="checkbox" class="form-check-input checkfiltre" name="1" id="chck1" >
+            <label class="form-check-label" for="chck1">Sorties dont je suis l'organisateur(trice)</label>
+        </div>
+        <div class="form-check w-25">
+            <input type="checkbox" class="form-check-input checkfiltre" name="2" id="chck2">
+            <label class="form-check-label" for="chck2">Sorties auxquelles je suis inscrit(e)</label>
+        </div>
+        <div class="form-check w-25">
+            <input type="checkbox" class="form-check-input checkfiltre" name="3" id="chck3">
+            <label class="form-check-label" for="chck3">Sorties auxquelles je ne suis pas inscrit(e)</label>
+        </div>
+        <div class="form-check w-25">
+            <input type="checkbox" class="form-check-input checkfiltre" name="4" id="chck4">
+            <label class="form-check-label" for="chck4">Sorties passées</label>
+        </div>
+
+    </div>
+
+
+    <!-- Use any element to open the sidenav -->
+    <span class="btn btn-success" onclick="openNav()">Rechercher</span>
+
+
     <div class="row my-4">
     {% for trip in trips %}
-        <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-        <div class="card card-cascade narrower">
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2" id="{{ trip.id }}">
+            {% set unTrip = {
+                id: trip.id,
+                organizer: trip.organizer.id,
+            } %}
+            {% set unUser = {
+                idTrip: userTrips[loop.index0].trip_id|default(null),
+                idUser: userTrips[loop.index0].user_id|default(null),
+            } %}
+            {% set infoUser = {
+                id: user.id,
+            } %}
+            <div style="display: none" data-entry-us="{{ infoUser|json_encode }}" data-entry-user="{{ unUser|json_encode }}" data-entry-info='{{ unTrip|json_encode }}'>
+                ...
+            </div>
+            <div class="card card-cascade narrower">
 
             <!-- Card image -->
             <div class="view view-cascade overlay">
@@ -18,8 +60,8 @@
             </div>
 
             <!-- Card content -->
-            <div class="card-body card-body-cascade">
-
+            <div class="card-body card-body-cascade filter"  >
+{#            FAIRE UN AUTRE DIV#}
                 <!-- Label -->
                 <div class="progress md-progress" style="height: 20px">
                     <div class="progress md-progress material-tooltip-main" style="height: 20px"
@@ -65,7 +107,7 @@
         </div>
     {% endfor %}
     </div>
-    <div class="row justify-content-center my-3">
+    <div style="z-index: 0" class="row justify-content-center my-3">
         <nav class="Page navigation">
             <ul class="pagination pg-teal pagination-circle">
                 <li class="page-item">
@@ -88,5 +130,17 @@
             </ul>
         </nav>
     </div>
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.height = "170px";
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.height = "0";
+        }
+    </script>
 {% endblock %}
 
