@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\City;
 use App\Entity\Situation;
 use App\Entity\Place;
 use App\Entity\Trip;
-use App\Entity\User;
 use App\Form\TripType;
+use App\Repository\SituationRepository;
 use App\Repository\TripRepository;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Security;
 
 
 /**
- * @Route("/trip")
+ * @Route("/sorties")
  */
 class TripController extends Controller
 {
@@ -112,14 +112,14 @@ class TripController extends Controller
 
 
     /**
-     * @Route("/cancel/{id}",  name="trip_cancel", methods={"GET"})
+     * @Route("/unsubscrib/{id}",  name="trip_unsubscrib", methods={"GET"})
      * @param Trip $trip
      * @param Security $security
      * @param EntityManagerInterface $em
      * @return Response
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
-    public function cancel(Trip $trip, Security $security,EntityManagerInterface $em)
+    public function unsubscrib(Trip $trip, Security $security,EntityManagerInterface $em)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $trip = $entityManager->getRepository(Trip::class)->find($trip);
@@ -139,6 +139,25 @@ class TripController extends Controller
 
         return $this->redirectToRoute('Index', []);
 
+    }
+
+    /**
+     * @Route("/cancel/{id}", name="trip_cancel")
+     * @param Trip $trip
+     * @param SituationRepository $situationRepository
+     * @param Request $request
+     * @return Response
+     */
+    public function cancel(Trip $trip, SituationRepository $situationRepository, Request $request)
+    {
+        $canceled = $situationRepository->find(6);
+        $reason = $request->get('reason');
+        $trip->setStatus($canceled);
+        $trip->setCause($reason);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        $this->addFlash('Success', 'Modifications enregistrées !');
+        return $this->redirectToRoute('Index');
     }
 
 
@@ -181,7 +200,7 @@ class TripController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="trip_delete", methods={"DELETE"})
+     * @Route("/{id}", name="trip_delete")
      * @param Request $request
      * @param Trip $trip
      * @return Response
@@ -197,4 +216,6 @@ class TripController extends Controller
 
         return $this->redirectToRoute('trip_index');
     }
+
+
 }

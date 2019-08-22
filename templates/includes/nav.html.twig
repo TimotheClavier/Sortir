@@ -1,4 +1,4 @@
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark success-color-dark lighten-1 {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark success-color-dark lighten-1 {{ app.session.flashbag.peek('success')|length > 0 ? '' : '' }}">
     <a class="navbar-brand" href="{{ path('Index') }}">ENI Sortir</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
             aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,15 +12,19 @@
             <li class="{{ app.request.get('_route') == 'app_profile' ? 'active' }} nav-item">
                 <a class="nav-link" href="{{ path('app_profile') }}">Mon Profil</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-555" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Administration
                 </a>
                 <div class="dropdown-menu dropdown-success" aria-labelledby="navbarDropdownMenuLink-555">
+                    <a class="dropdown-item" href="{{ path('user_index') }}">Utilisateurs</a>
+                    <a class="dropdown-item" href="{{ path('trip_index') }}">Sorties</a>
                     <a class="dropdown-item" href="{{ path('place_index') }}">Sites</a>
                     <a class="dropdown-item" href="{{ path('city_index') }}">Villes</a>
                 </div>
             </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item mx-2">

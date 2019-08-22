@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/city")
+ * @Route("/villes")
  */
 class CityController extends Controller
 {
     /**
      * @Route("/", name="city_index", methods={"GET"})
+     * @param CityRepository $cityRepository
+     * @return Response
      */
     public function index(CityRepository $cityRepository): Response
     {
@@ -27,6 +29,8 @@ class CityController extends Controller
 
     /**
      * @Route("/new", name="city_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -51,6 +55,8 @@ class CityController extends Controller
 
     /**
      * @Route("/{id}", name="city_show", methods={"GET"})
+     * @param City $city
+     * @return Response
      */
     public function show(City $city): Response
     {
@@ -61,6 +67,9 @@ class CityController extends Controller
 
     /**
      * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param City $city
+     * @return Response
      */
     public function edit(Request $request, City $city): Response
     {
@@ -81,6 +90,9 @@ class CityController extends Controller
 
     /**
      * @Route("/{id}", name="city_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param City $city
+     * @return Response
      */
     public function delete(Request $request, City $city): Response
     {

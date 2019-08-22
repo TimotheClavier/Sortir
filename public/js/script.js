@@ -14,6 +14,19 @@ $(document).ready(function () {
     $('#data-table-place').DataTable();
     $('#data-table-city').DataTable();
     $('.dataTables_length').addClass('bs-select');
+$(document).ready( function() {
+  $('select').addClass('browser-default custom-select');
+  $('[data-toggle="popover-hover"]').popover({
+    html: true,
+    trigger: 'hover',
+    placement: 'bottom',
+    content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+  });
+  $('#data-table').DataTable({
+    "scrollX": true,
+    "autoWidth": true
+  });
+  $('.dataTables_length').addClass('bs-select');
 
     Notiflix.Confirm.Init();
     Notiflix.Notify.Init({
@@ -337,6 +350,12 @@ $(document).ready(function () {
 
 });
 
+  Notiflix.Confirm.Init();
+  Notiflix.Notify.Init({
+    position: 'right-bottom',
+    autoWidth: true
+  });
+});
 
 function eventConfirm() {
     Notiflix.Confirm.Show(
@@ -376,8 +395,23 @@ function cityConfirm() {
     );
 }
 
-function notifyError(message) {
-    Notiflix.Notify.Failure(message);
+
+function userConfirm(id) {
+  Notiflix.Confirm.Show(
+    'Attention',
+    'Voulez vous vraiment supprimer cet Utilisateur ?',
+    'Oui',
+    'Non',
+    function() {
+      $('#form_delete_user' + id).submit();
+    }
+  );
 }
+
+function notifyError( message ) {
+  Notiflix.Notify.Failure(message);
+}
+
+
 
 

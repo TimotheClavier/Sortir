@@ -48,7 +48,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank(message="le mot de passe ne peut être vide")
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -76,9 +75,6 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="le numéro ne peut être vide")
-     * @Assert\Length(
-     *     min="10", max="10", exactMessage="le numéro doit faire exactement 10 caractères"
-     * )
      * @ORM\Column(type="string", nullable=true)
      */
     private $telephone;
@@ -112,6 +108,13 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="Trip", mappedBy="organizer")
      */
     private $organisedTrips;
+
+    /**
+     * @var string le token qui servira lors de l'oubli de mot de passe
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $resetToken;
+
 
     public function getId()
     {
@@ -330,6 +333,22 @@ class User implements UserInterface
         $this->organisedTrips = $organisedTrips;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResetToken()
+    {
+        return $this->resetToken;
+    }
+
+    /**
+     * @param string $resetToken
+     */
+    public function setResetToken( $resetToken)
+    {
+        $this->resetToken = $resetToken;
     }
 
     public function __toString()
