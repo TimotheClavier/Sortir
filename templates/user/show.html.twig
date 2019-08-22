@@ -4,46 +4,32 @@
 
 
 {% block body %}
-    <h1>Profile de {{ user.nom }} {{ user.prenom }}</h1>
-    <div class="row">
-        <div class="col-6">
-            <div class="md-form">
-                <p>Nom : {{ user.nom }} </p>
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document" id="profil-modal">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header">
+                <img src="{{ asset(user.avatar) }}" alt="avatar" class="rounded-circle img-responsive" height="130" width="130">
             </div>
-        </div>
-        <div class="col-6">
-            <div class="md-form">
-               <p>Prénom : {{ user.prenom }} </p>
+            <!--Body-->
+            <div class="modal-body text-center mb-1">
+
+                <h3 class="mt-1 mb-2 font-weight-bold dark-grey-text">{{ user.nom }} {{ user.prenom }}</h3>
+                <p class="card-text"><i class="fas fa-city"></i> {{ user.city.libelle }}</p>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <p><i class="fas fa-at"></i> {{ user.email }}</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <i class="fas fa-phone"></i> {{ user.telephone }}</p>
+                    </div>
+                </div>
             </div>
+
         </div>
+        <!--/.Content-->
     </div>
-
-    <div class="row">
-        <div class="col-6">
-            <div class="md-form">
-                <p> Email : {{ user.email }} </p>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="md-form">
-                <p> Téléphone : {{ user.telephone }}</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <div class="">
-                <p>Ville : {{ user.city.libelle }}</p>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="">
-               <img src="{{ asset(user.avatar) }}"></imgW>
-            </div>
-        </div>
-    </div>
-
+    <a href="{{ path('Index') }}" class="btn btn-outline-primary">Retour</a>
 {% endblock %}
 

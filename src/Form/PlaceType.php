@@ -21,7 +21,7 @@ class PlaceType extends AbstractType
                 ]
             ])
             ->add('street', TextType::class, [
-                'label' => 'Ville',
+                'label' => 'Rue',
                 'attr' => [
                     'class' => 'form-control'
                 ]
