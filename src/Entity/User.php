@@ -109,6 +109,13 @@ class User implements UserInterface
      */
     private $organisedTrips;
 
+    /**
+     * @var string le token qui servira lors de l'oubli de mot de passe
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $resetToken;
+
+
     public function getId()
     {
         return $this->id;
@@ -326,6 +333,22 @@ class User implements UserInterface
         $this->organisedTrips = $organisedTrips;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResetToken()
+    {
+        return $this->resetToken;
+    }
+
+    /**
+     * @param string $resetToken
+     */
+    public function setResetToken( $resetToken)
+    {
+        $this->resetToken = $resetToken;
     }
 
     public function __toString()

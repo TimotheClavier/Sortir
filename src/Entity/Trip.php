@@ -100,7 +100,7 @@ class Trip
     private $coverImage;
 
     /**
-     * User[]
+     * user[]
      * Many Groups have Many Users.
      * @ManyToMany(targetEntity="User", mappedBy="trips")
      */
