@@ -73,6 +73,9 @@
             <div class="">
                 {{ form_label(profileForm.city) }}
                 {{ form_widget(profileForm.city) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(profileForm.city) }}
+                </small>
             </div>
         </div>
 
@@ -80,6 +83,9 @@
             <div class="">
                 {{ form_label(profileForm.avatar) }}
                 {{ form_widget(profileForm.avatar) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(profileForm.avatar) }}
+                </small>
             </div>
         </div>
     </div>
