@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
@@ -15,6 +16,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
  */
 class Trip
 {
+
     /**
      * Hook SoftDeleteable behavior
      * updates deletedAt field
@@ -29,16 +31,24 @@ class Trip
     private $id;
 
     /**
+     * @Assert\NotBlank(message="le nom ne peut être vide")
+     * @Assert\Length(
+     *     min="5", minMessage="le nom doit faire plus de 5 caractère",
+     *     max="55", maxMessage="le nom ne doit pas faire plus de 55 caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\GreaterThan("today", message="La date de la sortie doit être suppérieur à aujourd'hui")
      * @ORM\Column(type="datetime")
      */
     private $tripDate;
 
     /**
+     * @Assert\GreaterThan("today", message="La date d'inscription doit être suppérieur à aujourd'hui")
+     * @Assert\LessThan(propertyPath="tripDate", message="La date d'inscription doit être suppérieur au {{ compared_value }}")
      * @ORM\Column(type="datetime")
      */
     private $inscriptionDate;
@@ -54,6 +64,10 @@ class Trip
     private $duration;
 
     /**
+     * @Assert\NotBlank(message="la déscription ne peut être vide")
+     * @Assert\Length(
+     *     min="5", minMessage="la déscription doit faire plus de 5 caractère",
+     * )
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -92,6 +106,15 @@ class Trip
      * @ManyToMany(targetEntity="User", mappedBy="trips")
      */
     private $users;
+
+    /**
+     * Trip constructor.
+     */
+    public function __construct()
+    {
+        $this->tripDate = new \DateTime();
+        $this->inscriptionDate = new \DateTime();
+    }
 
     public function getId()
     {
