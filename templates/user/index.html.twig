@@ -4,8 +4,26 @@
 
 {% block body %}
     <div class="row justify-content-between">
-        <h1>Gestion des Utilisateurs</h1>
-        <a href="{{ path('user_new') }}" class="btn btn-success">Ajouter</a>
+        <div class="col-lg-6 col-sm-12">
+            <form class="md-form" method="POST" action="{{ path('user_upload') }}" enctype="multipart/form-data">
+                <div class="file-field">
+                    <button type="submit" class="btn btn-outline-success"
+                            onclick="Notiflix.Loading.Pulse('Import en cours...');">
+                        Importer
+                    </button>
+                    <a class="btn-floating aqua-gradient mt-0 float-left">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <input type="file" name="csv_file">
+                    </a>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-sm12">
+            <a href="{{ path('user_new') }}" class="btn btn-success">Ajouter</a>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

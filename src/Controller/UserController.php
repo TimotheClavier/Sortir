@@ -6,12 +6,15 @@ use App\Entity\City;
 use App\Entity\User;
 use App\Form\ProfileFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\CityRepository;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use App\Utils\UploadUtils;
+use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +45,8 @@ class UserController extends Controller
      * @param UserAuthenticator $authenticator
      * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator): Response
     {
         $user = new User();
         $cities = $this->getDoctrine()->getRepository(City::class)->findAll();
@@ -147,7 +151,8 @@ class UserController extends Controller
 
             if($img)
             {
-                $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),$user->getNom().'_'.$user->getPrenom());
+                $fileName = $upload->uploadUserPicture($img,$this->getParameter('users_pictures'),
+                    $user->getNom().'_'.$user->getPrenom());
                 $user->setAvatar('img/users/'.$fileName);
             }
 
@@ -223,7 +228,8 @@ class UserController extends Controller
      * @param TokenGeneratorInterface $tokenGenerator
      * @return Response
      */
-    public function forgottenPassword(Request $request, UserPasswordEncoderInterface $encoder,Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
+    public function forgottenPassword(Request $request, UserPasswordEncoderInterface $encoder,
+        Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
     {
 
         if ($request->isMethod('POST')) {
@@ -248,7 +254,8 @@ class UserController extends Controller
                 return $this->redirectToRoute('Index');
             }
 
-            $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $this->generateUrl('app_reset_password', array('token' => $token),
+                UrlGeneratorInterface::ABSOLUTE_URL);
 
             $body = " voici le token pour reseter votre mot de passe : <a href=" . $url."> ici </a>";
 
@@ -274,7 +281,7 @@ class UserController extends Controller
      * @param Request $request
      * @param string $token
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return Response
      */
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -294,7 +301,7 @@ class UserController extends Controller
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $entityManager->flush();
 
-            $this->addFlash('notice', 'Mot de passe mis à jour');
+            $this->addFlash('Success', 'Mot de passe mis à jour');
 
             return $this->redirectToRoute('Index');
         }else {
@@ -304,6 +311,47 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @Route("utilisateurs/upload", name="user_upload")
+     * @param Request $request
+     * @param CityRepository $cityRepository
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function import(Request $request, CityRepository $cityRepository,
+        UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    {
+        $file = $request->files->get('csv_file');
+        if ($file != null) {
+            $fileHandle = fopen($file->getPathName(), "r");
+            //Loop through the CSV rows.
+            while (($row = fgetcsv($fileHandle, 0, ";")) !== FALSE) {
+                /** @var City $city */
+                $city = $cityRepository->findBy(['libelle' => $row[4]]);
 
+                if ($city !== null) {
+                    continue;
+                }
+
+                $user = new User();
+                $user->setActive(true);
+                $user->setAvatar('img/users/default.jpg');
+                $user->setEmail($row[0]);
+                $user->setNom($row[1]);
+                $user->setPrenom($row[2]);
+                $user->setTelephone($row[3]);
+                $user->setCity($city);
+                $user->setPassword(
+                    $passwordEncoder->encodePassword($user, $row[5])
+                );
+                $user->setRoles(['ROLE_USER']);
+                $entityManager->persist($user);
+            }
+            $entityManager->flush();
+            $this->addFlash('Success', 'Import terminé');
+        }
+        return $this->redirectToRoute('user_index');
+    }
 
 }

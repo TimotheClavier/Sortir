@@ -72,12 +72,15 @@ class TripType extends AbstractType
                 'choice_value' => function (Place $place = null) {
                     return $place ? $place->getId() : '';
                 },
-                'label' => 'Place : '
+                'label' => 'Site'
             ])
             ->add('coverImage' ,FileType::class, [
-                'label' => 'Image : ',
+                'label' => null,
                 'data_class' => null,
-                // make it optional so you don't have to re-upload the PDF file
+                'attr' => [
+                    'class' => 'file-upload'
+                ],
+                // make it optional so you don't have to re-upload the file
                 'mapped' => false,
                 // everytime you edit the Product details
                 'required' => false,
