@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Entity\Situation;
 use App\Entity\Trip;
-use App\Repository\TripRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TripService
@@ -43,9 +42,7 @@ class TripService
     public function updateStatus()
     {
         $entityManager = $this->container->get('doctrine')->getManager();
-        $now = new \DateTime();
-        $now->modify('+2 hours');
-
+        $now = new \DateTime('', new \DateTimeZone('Europe/Paris'));
         /** @var Trip[] $trips */
         $trips = $this->container->get('doctrine')->getRepository(Trip::class)->findAll();
         /** @var Situation[] $situations */
@@ -57,8 +54,9 @@ class TripService
         }
 
         foreach ($trips as $trip) {
-            $endDate = new \DateTime($trip->getTripDate()->format('Y-m-d'));
+            $endDate = new \DateTime($trip->getTripDate()->format('c'));
             $endDate->modify('+' . $trip->getDuration() . ' minutes');
+            dump($now, $endDate);
             if ($trip->getStatus()->getId() == 1) {
                 continue;
             }

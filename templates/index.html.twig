@@ -98,7 +98,7 @@
                 <div class="progress md-progress" style="height: 20px">
                     <div class="progress md-progress material-tooltip-main" style="height: 20px"
                          data-toggle="popover-hover" title="Places disponible"
-                         data-content="Il y'a {{ trip.seat }} places pour cette évenement.">
+                         data-content="Il reste {{ trip.seat - trip.users|length }} places pour cette évenement.">
                         <div class="progress-bar bg-success" role="progressbar"
                              style="width: {{ (trip.users|length / trip.seat * 100 ) }}%;
                                      height: 20px"
