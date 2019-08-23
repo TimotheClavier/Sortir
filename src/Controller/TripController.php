@@ -53,6 +53,17 @@ class TripController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $trip->setOrganizer($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
+
+            $upload = new UploadUtils();
+            $img = $form['coverImage']->getData();
+
+            if($img)
+            {
+                $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
+                $trip->setCoverImage('img/trips/'.$fileName);
+            }
+
+
             $entityManager->persist($trip);
             $entityManager->flush();
 
