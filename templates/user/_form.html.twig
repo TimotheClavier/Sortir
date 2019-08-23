@@ -77,13 +77,20 @@
                 </div>
 
                 <div class="col">
-                    <div class="">
-                        {{ form_label(profileForm.avatar) }}
-                        {{ form_widget(profileForm.avatar) }}
-                        <small class="form-text text-danger mb-4">
-                            {{ form_errors(profileForm.avatar) }}
-                        </small>
+                    <div class="md-from">
+                        <div class="file-field">
+                            <div class="btn btn-outline-success btn-sm float-left">
+                                {{ form_label(profileForm.avatar) }}
+                                {{ form_widget(profileForm.avatar) }}
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate form-control" type="text" placeholder="Upload">
+                            </div>
+                        </div>
                     </div>
+                    <small class="form-text text-danger mb-4">
+                        {{ form_errors(profileForm.avatar) }}
+                    </small>
                 </div>
             </div>
             <div class="row mt-4">

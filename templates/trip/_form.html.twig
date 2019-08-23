@@ -71,8 +71,17 @@
             </small>
         </div>
         <div class="col-lg-6 col-sm-12">
-            {{ form_label(form.coverImage) }}
-            {{ form_widget(form.coverImage) }}
+            <div class="md-from">
+                <div class="file-field">
+                    <div class="btn btn-outline-success btn-sm float-left">
+                        {{ form_label(form.coverImage) }}
+                        {{ form_widget(form.coverImage) }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate form-control" type="text" placeholder="Upload">
+                    </div>
+                </div>
+            </div>
             <small class="form-text text-danger mb-4">
                 {{ form_errors(form.coverImage) }}
             </small>
