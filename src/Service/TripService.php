@@ -56,7 +56,6 @@ class TripService
         foreach ($trips as $trip) {
             $endDate = new \DateTime($trip->getTripDate()->format('c'));
             $endDate->modify('+' . $trip->getDuration() . ' minutes');
-            dump($now, $endDate);
             if ($trip->getStatus()->getId() == 1) {
                 continue;
             }
