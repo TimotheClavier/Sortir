@@ -77,6 +77,10 @@
                                        href="{{ path('trip_registration', { 'id': trip.id }) }}">
                                         <i class="fas fa-calendar-check"></i>
                                     </a>
+                                    {% else %}
+                                    <p class="font-small font-weight-light text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i> Impossible de s'inscrire pour cette sortie
+                                    </p>
                                 {% endif %}
                             {% endif %}
                         {% endif %}
