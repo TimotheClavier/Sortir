@@ -68,18 +68,31 @@ $(document).ready( function() {
             $.map(entryElements, item => $(item).data('entryInfo'));
 
 
-        entryIds.forEach(function (value,index) {
-            console.log("place -> id : " + entryPlace[index].id + "Trip -> id_place : " + value.place_id);
-            console.log("place -> city : " + entryPlace[index].city + "City -> id : " + nb);
-            console.log(" ");
-                if(entryPlace[index].id != value.place_id && entryPlace[index].city != nb){
+        entryPlace.forEach(function (val, ind) {
+            if(val.city == nb){
+                entryIds.forEach(function (value,index) {
+                    var res = "";
+                    if(val.id != value.place_id){
+                        res = "none";
+                    }
+                    else{
+                        res = "";
+                    }
                     var id = "#" + value.id;
-                    $(id).css('display', 'none');
-                }
-                else{
+                    $(id).css('display', res);
+                });
+
+            }
+            else if(nb == "reset"){
+                entryIds.forEach(function (value,index) {
                     var id = "#" + value.id;
-                    $(id).css('display', '');
-                }
+                    $(id).css('display', "");
+
+                });
+            }
+
+
+
 
 
         })
