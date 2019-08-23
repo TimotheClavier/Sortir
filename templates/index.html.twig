@@ -4,9 +4,6 @@
 
 {% block body %}
 
-
-
-
     <div id="mySidenav" class="sidenav">
         {% for place in places %}
             {% set place = {
@@ -14,8 +11,8 @@
                 libelle: place.libelle,
                 city: place.city.id,
             } %}
-        <div style="display: none" data-entry-place="{{ place|json_encode }}">
-        </div>
+            <div style="display: none" data-entry-place="{{ place|json_encode }}">
+            </div>
         {% endfor %}
         {#<div data-entry-place="{{ places|json_encode }}"></div>#}
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -33,135 +30,156 @@
             <label for="selectVille"></label>
 
         </div>
-<div style="margin-left: 500px; margin-top: -125px">
-        <div class="form-check w-50">
-            <input type="checkbox" class="form-check-input checkfiltre" name="1" id="chck1" >
-            <label class="form-check-label" for="chck1">Sorties dont je suis l'organisateur(trice)</label>
+        <div style="margin-left: 500px; margin-top: -125px">
+            <div class="form-check w-50">
+                <input type="checkbox" class="form-check-input checkfiltre" name="1" id="chck1">
+                <label class="form-check-label" for="chck1">Sorties dont je suis l'organisateur(trice)</label>
+            </div>
+            <div class="form-check w-50">
+                <input type="checkbox" class="form-check-input checkfiltre" name="2" id="chck2">
+                <label class="form-check-label" for="chck2">Sorties auxquelles je suis inscrit(e)</label>
+            </div>
+            <div class="form-check w-50">
+                <input type="checkbox" class="form-check-input checkfiltre" name="3" id="chck3">
+                <label class="form-check-label" for="chck3">Sorties auxquelles je ne suis pas inscrit(e)</label>
+            </div>
+            <div class="form-check w-20">
+                <input type="checkbox" class="form-check-input checkfiltre" name="4" id="chck4">
+                <label class="form-check-label" for="chck4">Sorties passées</label>
+            </div>
         </div>
-        <div class="form-check w-50">
-            <input type="checkbox" class="form-check-input checkfiltre" name="2" id="chck2">
-            <label class="form-check-label" for="chck2">Sorties auxquelles je suis inscrit(e)</label>
-        </div>
-        <div class="form-check w-50">
-            <input type="checkbox" class="form-check-input checkfiltre" name="3" id="chck3">
-            <label class="form-check-label" for="chck3">Sorties auxquelles je ne suis pas inscrit(e)</label>
-        </div>
-        <div class="form-check w-20">
-            <input type="checkbox" class="form-check-input checkfiltre" name="4" id="chck4">
-            <label class="form-check-label" for="chck4">Sorties passées</label>
-        </div>
-</div>
     </div>
-
 
     <!-- Use any element to open the sidenav -->
     <span class="btn btn-success" onclick="openNav()">Rechercher</span>
 
+    <!--Carousel Wrapper-->
+    <div id="multi-item-example" data-interval="0" class="carousel slide carousel-multi-item" data-ride="carousel">
 
-    <div class="row my-4">
+        <!--Controls-->
+        <div class="controls-top">
+            <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i
+                        class="fas fa-chevron-left"></i></a>
+            <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+                        class="fas fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
 
-    {% for trip in trips %}
-        <div class="col-lg-4 col-md-6 col-sm-12 my-2" id="{{ trip.id }}">
-            {% set unTrip = {
-                id: trip.id,
-                name: trip.name,
-                place_id: trip.place.id,
-                organizer: trip.organizer.id,
-                sortie: trip.tripDate|date('m/d/Y'),
-                sysdate: date|date('m/d/Y')
-            } %}
-            {% set unUser = {
-                idTrip: userTrips[loop.index0].trip_id|default(null),
-                idUser: userTrips[loop.index0].user_id|default(null),
-            } %}
-            {% set infoUser = {
-                id: user.id,
-            } %}
-            <div style="display: none" data-entry-us="{{ infoUser|json_encode }}" data-entry-user="{{ unUser|json_encode }}" data-entry-info='{{ unTrip|json_encode }}'>
-                ...
-            </div>
-            <div class="card card-cascade narrower">
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+            <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+            <li data-target="#multi-item-example" data-slide-to="1"></li>
+            <li data-target="#multi-item-example" data-slide-to="2"></li>
+        </ol>
+        <!--/.Indicators-->
 
-            <!-- Card image -->
-            <div class="view view-cascade overlay">
-                <img  class="card-img-top" src="{{ asset(trip.coverImage) }}" alt="Card image cap"
-                    width="300" height="150">
-                <a href="{{ path('trip_show', { 'id': trip.id }) }}">
-                    <div class="mask rgba-white-slight"></div>
-                </a>
-            </div>
+        <!--Slides-->
 
-            <!-- Card content -->
-            <div class="card-body card-body-cascade filter"  >
-{#            FAIRE UN AUTRE DIV#}
-                <!-- Label -->
-                <div class="progress md-progress" style="height: 20px">
-                    <div class="progress md-progress material-tooltip-main" style="height: 20px"
-                         data-toggle="popover-hover" title="Places disponible"
-                         data-content="Il y'a {{ trip.seat }} places pour cette évenement.">
-                        <div class="progress-bar bg-success" role="progressbar"
-                             style="width: {{ (trip.users|length / trip.seat * 100 ) }}%;
-                                     height: 20px"
-                             aria-valuenow="{{ (trip.users|length / trip.seat * 100) }}"
-                             aria-valuemin="0" aria-valuemax="{{ trip.seat }}">
-                            {{ (trip.users|length / trip.seat * 100)|round }}%
+        <div class="carousel-inner" role="listbox">
+
+            {% for atrip in trips %}
+            <div class="carousel-item {% if(loop.index == 1) %} active {% endif %} ">
+                <div class="row my-4">
+                {% for trip in atrip %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 my-2" id="{{ trip.id }}">
+                        {% set unTrip = {
+                            id: trip.id,
+                            name: trip.name,
+                            place_id: trip.place.id,
+                            organizer: trip.organizer.id,
+                            sortie: trip.tripDate|date('m/d/Y'),
+                            sysdate: date|date('m/d/Y')
+                        } %}
+                        {% set unUser = {
+                            idTrip: userTrips[loop.index0].trip_id|default(null),
+                            idUser: userTrips[loop.index0].user_id|default(null),
+                        } %}
+                        {% set infoUser = {
+                            id: user.id,
+                        } %}
+                        <div style="display: none" data-entry-us="{{ infoUser|json_encode }}"
+                             data-entry-user="{{ unUser|json_encode }}" data-entry-info='{{ unTrip|json_encode }}'>
+                            ...
+                        </div>
+                        <div class="card card-cascade narrower">
+
+                            <!-- Card image -->
+                            <div class="view view-cascade overlay">
+                                <img class="card-img-top" src="{{ asset(trip.coverImage) }}" alt="Card image cap"
+                                     width="300" height="150">
+                                <a href="{{ path('trip_show', { 'id': trip.id }) }}">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade filter">
+                                {#            FAIRE UN AUTRE DIV#}
+                                <!-- Label -->
+                                <div class="progress md-progress" style="height: 20px">
+                                    <div class="progress md-progress material-tooltip-main" style="height: 20px"
+                                         data-toggle="popover-hover" title="Places disponible"
+                                         data-content="Il y'a {{ trip.seat }} places pour cette évenement.">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             style="width: {{ (trip.users|length / trip.seat * 100 ) }}%;
+                                                     height: 20px"
+                                             aria-valuenow="{{ (trip.users|length / trip.seat * 100) }}"
+                                             aria-valuemin="0" aria-valuemax="{{ trip.seat }}">
+                                            {{ (trip.users|length / trip.seat * 100)|round }}%
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Title -->
+                                <h4 class="font-weight-bold card-title">{{ trip.name }}
+                                    {% if trip.organizer.id == app.user.id %}
+                                        <i class="fas fa-user"></i>
+                                    {% endif %}
+                                </h4>
+                                <!-- Text -->
+                                <p class="card-text text-truncate">{{ trip.description }}</p>
+                                <div class="container">
+                                    <div class="row justify-content-between">
+                                        <div class="col-lg-6 col-sm-12">
+                                            {% if date(trip.inscriptionDate) > date() or trip.organizer.id == app.user.id %}
+                                                <a class="btn btn-success"
+                                                   href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            {% if( userTrips[loop.index0].trip_id|default(null) == trip.id) %}
+                                            <a class="btn btn-outline-success"
+                                               href="{{ path('trip_cancel', { 'id': trip.id }) }}">Se
+                                                désincrire</a>{% else %}
+                                                {% if trip.inscriptionDate > date and trip.organizer.id != app.user.id %}
+                                                    <a class="btn btn-outline-success"
+                                                       href="{{ path('trip_registration', { 'id': trip.id }) }}">Go</a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                <!-- Title -->
-                <h4 class="font-weight-bold card-title">{{ trip.name }}
-                    {% if trip.organizer.id == app.user.id %}
-                        <i class="fas fa-user"></i>
-                    {% endif %}
-                </h4>
-                <!-- Text -->
-                <p class="card-text text-truncate">{{ trip.description }}</p>
-                <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-lg-6 col-sm-12">
-                        {% if date(trip.inscriptionDate) > date() or trip.organizer.id == app.user.id %}
-                            <a class="btn btn-success" href="{{ path('trip_show', { 'id': trip.id }) }}">Voir</a>
-                        {% endif %}
+                </div>
 
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                       {%  if( userTrips[loop.index0].trip_id|default(null) == trip.id) %}
-                            <a class="btn btn-outline-success" href="{{ path('trip_cancel', { 'id': trip.id }) }}">Se désincrire</a>{% else %}
-                           {% if trip.inscriptionDate > date and trip.organizer.id != app.user.id %}
-                            <a class="btn btn-outline-success" href="{{ path('trip_registration', { 'id': trip.id }) }}">Go</a>
-                           {% endif %}
-                       {% endif %}
-                    </div>
-                </div>
-                </div>
+            {% endfor %}
             </div>
-            </div>
-        </div>
-    {% endfor %}
+
+
+
+        <!--/.Slides-->
+
     </div>
-    <div style="z-index: 0" class="row justify-content-center my-3">
-        <nav class="Page navigation">
-            <ul class="pagination pg-teal pagination-circle">
-                <li class="page-item">
-                    <a class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link">1</a></li>
-                <li class="page-item"><a class="page-link">2</a></li>
-                <li class="page-item"><a class="page-link">3</a></li>
-                <li class="page-item"><a class="page-link">4</a></li>
-                <li class="page-item"><a class="page-link">5</a></li>
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!--/.Carousel Wrapper-->
+
+
+
+
+
 
     <script>
         /* Set the width of the side navigation to 250px */

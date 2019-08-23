@@ -8,20 +8,23 @@ use App\Repository\PlaceRepository;
 use App\Repository\TripRepository;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Constraints\Date;
-use Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Configuration;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MainController extends Controller
 {
     /**
      * @Route("/", name="Index")
      * @param AuthenticationUtils $authenticationUtils
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @param TripRepository $tripRepository
      * @param PlaceRepository $placesRepository
      * @param CityRepository $cityRepository
@@ -29,13 +32,14 @@ class MainController extends Controller
      * @return Response
      * @throws DBALException
      */
-    public function index(AuthenticationUtils $authenticationUtils, TripRepository $tripRepository, PlaceRepository $placesRepository ,CityRepository $cityRepository, EntityManagerInterface $em)
+    public function index(AuthenticationUtils $authenticationUtils, Request $request,PaginatorInterface $paginator, TripRepository $tripRepository, PlaceRepository $placesRepository, CityRepository $cityRepository, EntityManagerInterface $em)
     {
         $res = [];
         $user = $this->getUser();
         if ($user !== null) {
+
             /** @var Trip[] $trips */
-            $trips = $tripRepository->findAll();
+            $lesTrips = $tripRepository->findAll();
 
             $cities = $cityRepository->findAll();
             $places = $placesRepository->findAll();
@@ -46,6 +50,20 @@ class MainController extends Controller
             $stmt->execute(array('iduser' => $user->getId()));
 
             $userTrips = $stmt->fetchAll();
+
+            $trips = array_chunk($lesTrips, 3);
+
+
+//            $em = $this->getDoctrine()->getManager();
+//            $allOurBlogPosts = $em->getRepository('App:Trip')->findAll();
+
+           /* $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $trips,
+                $request->query->getInt('page', 1),
+                3
+            );*/
+
 
             return $this->render('index.html.twig', [
                 'trips' => $trips,
@@ -66,5 +84,6 @@ class MainController extends Controller
             ]);
         }
     }
+
 
 }

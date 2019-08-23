@@ -1,21 +1,14 @@
-$(document).ready(function () {
+$(document).ready( function() {
 
-    var filtre = [];
+    var filtre = []
+
+
+    $('.carousel').carousel({
+        interval: false
+    } );
+
 
     $('select').addClass('browser-default custom-select');
-    $('[data-toggle="popover-hover"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'bottom',
-        content: function () {
-            return '<img src="' + $(this).data('img') + '" />';
-        }
-    });
-    $('#data-table-place').DataTable();
-    $('#data-table-city').DataTable();
-    $('.dataTables_length').addClass('bs-select');
-$(document).ready( function() {
-  $('select').addClass('browser-default custom-select');
   $('[data-toggle="popover-hover"]').popover({
     html: true,
     trigger: 'hover',
@@ -34,6 +27,8 @@ $(document).ready( function() {
     });
 
     Notiflix.Notify.Init({});
+
+
 
 
     $('#search').on("keyup", function () {
@@ -56,6 +51,7 @@ $(document).ready( function() {
       });
 
     });
+
 
     $("#selectVille").on("change",function () {
         var nb = $("#selectVille option:selected").attr('id');
@@ -90,10 +86,6 @@ $(document).ready( function() {
 
                 });
             }
-
-
-
-
 
         })
 
@@ -368,7 +360,7 @@ $(document).ready( function() {
     position: 'right-bottom',
     autoWidth: true
   });
-});
+
 
 function eventConfirm() {
     Notiflix.Confirm.Show(
