@@ -41,6 +41,7 @@ class CityController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($city);
+            $city->setLibelle(strtoupper($city->getLibelle()));
             $entityManager->flush();
             $this->addFlash('Success', 'Modifications enregistrées !');
 
