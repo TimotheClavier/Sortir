@@ -9,7 +9,7 @@
 
         <!-- Card image -->
         <div class="view view-cascade overlay">
-            <img class="card-img-top card-full-width" src="{{ asset(trip.coverImage) }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ asset(trip.coverImage) }}" alt="Card image cap" style="width: 75em; height: 17em;">
             <a>
                 <div class="mask rgba-white-slight"></div>
             </a>
@@ -57,9 +57,11 @@
                 <div class="row justify-content-between">
                     <div class="col-lg-4 col-sm-6">
                         {% if trip.organizer.id == app.user.id %}
-                            <a class="btn btn-outline-success"
-                               href="{{ path('trip_edit', {'id': trip.id}) }}">Modifier
-                            </a>
+                            {% if trip.status.id <= 2 %}
+                                <a class="btn btn-outline-success"
+                                   href="{{ path('trip_edit', {'id': trip.id}) }}">Modifier
+                                </a>
+                            {% endif %}
                             {% if trip.status.id != 6 %}
                                 <a  class="btn btn-outline-danger" data-toggle="modal" data-target="#basicExampleModal{{ trip.id }}">
                                     Annuler

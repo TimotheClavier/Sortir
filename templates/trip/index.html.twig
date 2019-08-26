@@ -13,14 +13,14 @@
                 <thead>
                 <tr>
                     <th class="th-sm" scope="col">Image</th>
-                    <th class="th-sm" scope="col">Name</th>
-                    <th class="th-sm" scope="col">TripDate</th>
-                    <th class="th-sm" scope="col">InscriptionDate</th>
-                    <th class="th-sm" scope="col">Seat</th>
-                    <th class="th-sm" scope="col">Duration</th>
+                    <th class="th-sm" scope="col">Nom</th>
+                    <th class="th-sm" scope="col">Date</th>
+                    <th class="th-sm" scope="col">Date d'inscription</th>
+                    <th class="th-sm" scope="col">Places</th>
+                    <th class="th-sm" scope="col">Durée (mn)</th>
                     <th class="th-sm" scope="col">Status</th>
                     <th class="th-sm" scope="col">Cause</th>
-                    <th class="th-sm" scope="col">actions</th>
+                    <th class="th-sm" scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,8 +30,8 @@
                             <img src="{{ asset(trip.coverImage) }}" height="25" width="100"/>
                         </td>
                         <td>{{ trip.name }}</td>
-                        <td>{{ trip.tripDate ? trip.tripDate|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ trip.inscriptionDate ? trip.inscriptionDate|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ trip.tripDate ? trip.tripDate|date('d-m-Y à H:i') : '' }}</td>
+                        <td>{{ trip.inscriptionDate ? trip.inscriptionDate|date('d-m-Y à H:i') : '' }}</td>
                         <td>{{ trip.seat }}</td>
                         <td>{{ trip.duration }}</td>
                         <td>{{ trip.status.libelle }}</td>

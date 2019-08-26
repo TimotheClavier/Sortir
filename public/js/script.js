@@ -28,10 +28,11 @@ $(document).ready(function () {
   })
   $('.dataTables_length').addClass('bs-select')
 
-  Notiflix.Confirm.Init()
   Notiflix.Notify.Init({
-    position: 'right-bottom'
+    position:'right-top',
+    distance: '15%'
   })
+  Notiflix.Confirm.Init({})
   Notiflix.Loading.Init({});
 
   $('#search').on('keyup', function () {
@@ -342,12 +343,6 @@ $(document).ready(function () {
 
     }
   }
-
-  Notiflix.Confirm.Init()
-  Notiflix.Notify.Init({
-    position: 'right-bottom',
-    autoWidth: true
-  })
 })
 
 function eventConfirm () {

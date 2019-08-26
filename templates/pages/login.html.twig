@@ -11,7 +11,7 @@
         <div class="col-4">
             <div class="card form-dark">
                 <h5 class="card-header success-color-dark white-text text-center py-4">
-                    <strong>Sign in</strong>
+                    <strong>Connexion</strong>
                 </h5>
 
                 <!--Card content-->
@@ -31,7 +31,7 @@
                         <div class="md-form">
                             <input type="password" name="password" id="inputPassword" class="form-control"
                                 required>
-                            <label for="inputPassword">Password</label>
+                            <label for="inputPassword">Mot de passe</label>
                         </div>
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}"
@@ -41,19 +41,19 @@
                                 <!-- Remember me -->
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me">
-                                    <label class="form-check-label" for="remember_me">Remember me</label>
+                                    <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
                                 </div>
                         </div>
 
                         <!-- Sign in button -->
-                        <button class="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+                        <button class="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Connexion</button>
 
                         <!-- Register -->
-                        <p>Not a member?
-                            <a href="{{ path('app_register') }}" class="green-link">Register</a>
+                        <p>Pas encore membre?
+                            <a href="{{ path('app_register') }}" class="green-link">S'inscrire</a>
                         </p>
                         <div>
-                            <a  href="{{ path('app_forgotten_password') }}" class="green-link">Forgotten password</a>
+                            <a  href="{{ path('app_forgotten_password') }}" class="green-link">Mot de passe oublié</a>
                         </div>
 
 
