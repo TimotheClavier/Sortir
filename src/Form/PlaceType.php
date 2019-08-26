@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Place;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +42,14 @@ class PlaceType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('city')
+            ->add('city', ChoiceType::class, [
+                'choices' => $options['cities'],
+                'choice_label' => 'libelle',
+                'choice_value' => function (City $city = null) {
+                    return $city ? $city->getId() : '';
+                },
+                'label' => 'Ville'
+            ])
         ;
     }
 
@@ -48,6 +57,7 @@ class PlaceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Place::class,
+            'cities' => null
         ]);
     }
 }

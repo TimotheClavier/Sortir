@@ -32,15 +32,23 @@ class MainController extends Controller
      * @return Response
      * @throws DBALException
      */
-    public function index(AuthenticationUtils $authenticationUtils, Request $request,PaginatorInterface $paginator, TripRepository $tripRepository, PlaceRepository $placesRepository, CityRepository $cityRepository, EntityManagerInterface $em)
+    public function index(AuthenticationUtils $authenticationUtils,
+                          Request $request,
+                          PaginatorInterface $paginator,
+                          TripRepository $tripRepository,
+                          PlaceRepository $placesRepository,
+                          CityRepository $cityRepository,
+                          EntityManagerInterface $em)
     {
         $res = [];
+
+        $city = $request->query->get("city");
+        dump($city);
         $user = $this->getUser();
         if ($user !== null) {
 
             /** @var Trip[] $trips */
             $lesTrips = $tripRepository->findAll();
-
             $cities = $cityRepository->findAll();
             $places = $placesRepository->findAll();
             $rawSql = "SELECT user_id , trip_id  FROM users_trips  WHERE user_id = :iduser";
@@ -51,22 +59,27 @@ class MainController extends Controller
 
             $userTrips = $stmt->fetchAll();
 
-            $trips = array_chunk($lesTrips, 3);
 
 
-//            $em = $this->getDoctrine()->getManager();
+
+            //$trips = array_chunk($lesTrips, 3);
+
+
+            $em = $this->getDoctrine()->getManager();
 //            $allOurBlogPosts = $em->getRepository('App:Trip')->findAll();
 
-           /* $paginator  = $this->get('knp_paginator');
+            $paginator  = $this->get('knp_paginator');
+
             $pagination = $paginator->paginate(
-                $trips,
+                $lesTrips,
                 $request->query->getInt('page', 1),
                 3
-            );*/
+            );
 
 
             return $this->render('index.html.twig', [
-                'trips' => $trips,
+                'trips' => $lesTrips,
+                'pagination' => $pagination,
                 'userTrips' => $userTrips,
                 'user' => $user,
                 'cities' => $cities,

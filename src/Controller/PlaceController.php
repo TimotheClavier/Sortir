@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Place;
 use App\Form\PlaceType;
+use App\Repository\CityRepository;
 use App\Repository\PlaceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,10 +33,11 @@ class PlaceController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CityRepository $cityRepository): Response
     {
+        $cities = $cityRepository->findBy([], ['libelle' => 'ASC']);
         $place = new Place();
-        $form = $this->createForm(PlaceType::class, $place);
+        $form = $this->createForm(PlaceType::class, $place, ['cities' => $cities]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
