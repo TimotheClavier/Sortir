@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
+        "knplabs/knp-paginator-bundle": "^4.0",
         "sensio/framework-extra-bundle": "^5.4",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/apache-pack": "^1.0",
