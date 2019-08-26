@@ -7,13 +7,14 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class Trip
+class Trip implements \Serializable
 {
 
     /**
@@ -72,6 +73,7 @@ class Trip
     private $description;
 
     /**
+     * @MaxDepth(2)
      * @ORM\ManyToOne(targetEntity="User", inversedBy="organisedTrips")
      */
     private $organizer;
@@ -90,6 +92,7 @@ class Trip
     /**
      * One Product has One Shipment.
      * @ManyToOne(targetEntity="Place", inversedBy="trips")
+     * @MaxDepth(2)
      */
     private $place;
 
@@ -102,6 +105,7 @@ class Trip
     /**
      * user[]
      * Many Groups have Many Users.
+     * @MaxDepth(2)
      * @ManyToMany(targetEntity="User", mappedBy="trips")
      */
     private $users;
@@ -302,4 +306,28 @@ class Trip
         $this->coverImage = $coverImage;
     }
 
+    /**
+     * String representation of object
+     * @link https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return null;
+    }
+
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        return null;
+    }
 }

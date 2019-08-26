@@ -6,13 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class Place
+class Place implements \JsonSerializable
 {
     /**
      * Hook SoftDeleteable behavior
@@ -71,11 +72,13 @@ class Place
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
      * @JoinColumn(name="city_id", referencedColumnName="id")
+     * @MaxDepth(2)
      */
     private $city;
 
     /**
      * @var Trip[]
+     * @MaxDepth(2)
      * @ORM\OneToMany(targetEntity="Trip", mappedBy="place", cascade={"remove"})
      */
     private $trips;
@@ -151,8 +154,9 @@ class Place
 
     /**
      * @return Trip[]
+     * @MaxDepth(2)
      */
-    public function getTrips(): array
+    public function getTrips()
     {
         return $this->trips;
     }
@@ -165,4 +169,35 @@ class Place
         $this->trips = $trips;
     }
 
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+       return;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id'        =>  $this->id,
+            'libelle'   =>  $this->libelle,
+            'street'    =>  $this->street,
+            'latitude'  =>  $this->latitude,
+            'longitude' =>  $this->longitude
+        ];
+    }
 }

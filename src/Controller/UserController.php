@@ -260,7 +260,7 @@ class UserController extends Controller
             $body = " voici le token pour reseter votre mot de passe : <a href=" . $url."> ici </a>";
 
             $message = (new \Swift_Message('[ENI-SORTIR]Mot de passe oublié'))
-                ->setFrom('sortir.eni@gmail.com')
+                ->setFrom('sortir@eni.fr')
                 ->setTo($user->getEmail())
                 ->setBody($body, 'text/html');
             $mailer->send($message);

@@ -2,20 +2,28 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Situation;
 use App\Entity\Place;
 use App\Entity\Trip;
 use App\Form\TripType;
+use App\Repository\CityRepository;
+use App\Repository\PlaceRepository;
 use App\Repository\SituationRepository;
 use App\Repository\TripRepository;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 /**
@@ -45,9 +53,10 @@ class TripController extends Controller
         $trip = new Trip();
         $status = $this->getDoctrine()->getManager()
             ->getRepository(Situation::class)->findAll();
-        $places = $this->getDoctrine()->getManager()
-            ->getRepository(Place::class)->findAll();
-        $form = $this->createForm(TripType::class, $trip,[ 'status' => $status , 'places' => $places]);
+        $cities = $this->getDoctrine()->getManager()
+            ->getRepository(City::class)->findAll();
+        $form = $this->createForm(TripType::class, $trip,
+            [ 'status' => $status , 'cities' => $cities]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,6 +72,11 @@ class TripController extends Controller
                 $trip->setCoverImage('img/trips/'.$fileName);
             }
 
+            $created = $entityManager->getRepository(Situation::class)->find(1);
+            $published = $entityManager->getRepository(Situation::class)->find(2);
+
+            $tripStatus = $form->get('publish')->isClicked() ? $published : $created;
+            $trip->setStatus($tripStatus);
 
             $entityManager->persist($trip);
             $entityManager->flush();
@@ -183,7 +197,8 @@ class TripController extends Controller
         $status = $this->getDoctrine()->getRepository(Situation::class)->findAll();
         $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
 
-        $form = $this->createForm(TripType::class, $trip,['status'=>$status,'places' => $places]);
+        $form = $this->createForm(TripType::class, $trip,
+            ['status'=>$status,'places' => $places]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -211,6 +226,23 @@ class TripController extends Controller
     }
 
     /**
+     * @Route("/ajax_request_place", name="ajax_request_place", methods={"GET","POST"})
+     * @param Request $request
+     * @param CityRepository $cityRepository
+     * @param PlaceRepository $placeRepository
+     * @param SerializerInterface $serializer
+     * @return Response
+     */
+    public function getPlace(Request $request, CityRepository $cityRepository ,
+                             PlaceRepository $placeRepository)
+    {
+        $city = $cityRepository->findBy(['id'=> $request->get('city')]);
+        $places = $placeRepository->findBy(['city'=> $city]);
+
+        return new JsonResponse($places);
+    }
+
+    /**
      * @Route("/{id}", name="trip_delete")
      * @param Request $request
      * @param Trip $trip
@@ -218,7 +250,8 @@ class TripController extends Controller
      */
     public function delete(Request $request, Trip $trip): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trip->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$trip->getId(),
+            $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trip);
             $entityManager->flush();
@@ -227,6 +260,5 @@ class TripController extends Controller
 
         return $this->redirectToRoute('trip_index');
     }
-
 
 }

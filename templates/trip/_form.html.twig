@@ -64,33 +64,46 @@
     </div>
     <div class="row">
         <div class="col-lg-6 col-sm-12">
+            {{ form_label(form.city) }}
+            {{ form_widget(form.city) }}
+            <small class="form-text text-danger mb-4">
+                {{ form_errors(form.city) }}
+            </small>
+        </div>
+        <div class="col-lg-6 col-sm-12">
             {{ form_label(form.place) }}
             {{ form_widget(form.place) }}
             <small class="form-text text-danger mb-4">
                 {{ form_errors(form.place) }}
             </small>
         </div>
-        <div class="col-lg-6 col-sm-12">
-            <div class="md-from">
-                <div class="file-field">
-                    <div class="btn btn-outline-success btn-sm float-left">
-                        {{ form_label(form.coverImage) }}
-                        {{ form_widget(form.coverImage) }}
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate form-control" type="text" placeholder="Upload">
+    </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="md-from">
+                    <div class="file-field">
+                        <div class="btn btn-outline-success btn-sm float-left">
+                            {{ form_label(form.coverImage) }}
+                            {{ form_widget(form.coverImage) }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate form-control" type="text" placeholder="Upload">
+                        </div>
                     </div>
                 </div>
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.coverImage) }}
+                </small>
             </div>
-            <small class="form-text text-danger mb-4">
-                {{ form_errors(form.coverImage) }}
-            </small>
         </div>
-    </div>
+
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-success">Confirmer</button>
+{#            <button class="btn btn-success">Confirmer</button>#}
+            {{ form_widget(form.save) }}
+            {{ form_widget(form.publish) }}
             <a href="{{ path('Index') }}" class="btn btn-outline-primary">Retour</a>
+
         </div>
     </div>
 {{ form_end(form) }}
