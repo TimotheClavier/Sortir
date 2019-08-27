@@ -14,14 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="Index")
+     * @Route("/a", name="Index")
      * @param AuthenticationUtils $authenticationUtils
      * @param Request $request
      * @param PaginatorInterface $paginator
@@ -42,8 +40,9 @@ class MainController extends Controller
     {
         $res = [];
 
-        $city = $request->query->get("city");
-        dump($city);
+        dump('toto');
+        //die;
+        dump($request);
         $user = $this->getUser();
         if ($user !== null) {
 
@@ -59,11 +58,7 @@ class MainController extends Controller
 
             $userTrips = $stmt->fetchAll();
 
-
-
-
             //$trips = array_chunk($lesTrips, 3);
-
 
             $em = $this->getDoctrine()->getManager();
 //            $allOurBlogPosts = $em->getRepository('App:Trip')->findAll();
@@ -76,6 +71,10 @@ class MainController extends Controller
                 3
             );
 
+            /*$response = new Response(json_encode(array(
+                'pagination' => $pagination,
+            )));
+            $response->headers->set('Content-Type', 'application/json');*/
 
             return $this->render('index.html.twig', [
                 'trips' => $lesTrips,
