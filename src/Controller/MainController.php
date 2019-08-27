@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class MainController extends Controller
 {
     /**
-     * @Route("/a", name="Index")
+     * @Route("/", name="Index")
      * @param AuthenticationUtils $authenticationUtils
      * @param Request $request
      * @param PaginatorInterface $paginator
