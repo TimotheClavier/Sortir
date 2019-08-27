@@ -66,7 +66,7 @@ $(document).ready(function () {
       let city = $(this).val()
       console.log(city)
       $.ajax({
-          url: "",
+          url: "a",
           type: "POST",
           dataType: "json",
           data: {
