@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class MainController extends Controller
 {
     /**
-     * @Route("/a", name="Index")
+     * @Route("/", name="Index")
      * @param AuthenticationUtils $authenticationUtils
      * @param Request $request
      * @param PaginatorInterface $paginator
@@ -47,7 +47,7 @@ class MainController extends Controller
         if ($user !== null) {
 
             /** @var Trip[] $trips */
-            $lesTrips = $tripRepository->findAll();
+            $lesTrips = $tripRepository->findBy([], ['tripDate' => 'DESC']);
             $cities = $cityRepository->findAll();
             $places = $placesRepository->findAll();
             $rawSql = "SELECT user_id , trip_id  FROM users_trips  WHERE user_id = :iduser";

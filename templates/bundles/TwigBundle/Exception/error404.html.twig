@@ -1,0 +1,11 @@
+{% extends 'empty.html.twig' %}
+
+{% block body %}
+    <h1>Page inexistante</h1>
+
+    <p>
+        La page que vous cherchez n'héxiste pas ou à été déplacer.
+    </p>
+    <img  class="card-img-top" src="{{ asset('img/404.svg') }}" alt="Card image cap">
+    <a href="{{ path('Index') }}" class="btn btn-success">Accueil</a>
+{% endblock %}

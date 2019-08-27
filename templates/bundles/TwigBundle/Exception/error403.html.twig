@@ -1,0 +1,15 @@
+{% extends 'empty.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Accès Refuser</h1>
+
+            <p>
+                Vous n'avez pas les droits pour accèder a cette page. C'est pourquoi un vigile vous bloque.
+            </p>
+            <img class="error-svg card-img-top" src="{{ asset('img/admin.svg') }}" alt="Card image cap">
+            <a href="{{ path('Index') }}" class="btn btn-success">Accueil</a>
+        </div>
+    </div>
+{% endblock %}

@@ -145,3 +145,6 @@
     white-space: nowrap;
 }
 
+.error-svg {
+    height: 80vh;
+}

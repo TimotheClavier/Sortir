@@ -1,0 +1,15 @@
+{% extends 'empty.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Erreur</h1>
+
+            <p>
+                Quelque chose ne s'est pas déroulé comme prévu.
+            </p>
+            <img class="error-svg card-img-top" src="{{ asset('img/error.svg') }}" alt="Card image cap">
+            <a href="{{ path('Index') }}" class="btn btn-success">Accueil</a>
+        </div>
+    </div>
+{% endblock %}
