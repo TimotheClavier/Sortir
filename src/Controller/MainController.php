@@ -48,7 +48,7 @@ class MainController extends Controller
         if ($user !== null) {
 
             /** @var Trip[] $trips */
-            $lesTrips = $tripRepository->findAll();
+            $lesTrips = $tripRepository->findBy([], ['tripDate' => 'DESC']);
             $cities = $cityRepository->findAll();
             $places = $placesRepository->findAll();
             $rawSql = "SELECT user_id , trip_id  FROM users_trips  WHERE user_id = :iduser";

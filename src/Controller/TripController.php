@@ -30,6 +30,7 @@ class TripController extends Controller
      */
     public function index(TripRepository $tripRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('trip/index.html.twig', [
             'trips' => $tripRepository->findAll(),
         ]);
