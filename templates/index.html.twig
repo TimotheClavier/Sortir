@@ -3,54 +3,55 @@
 {% block title %}Sortir.eni{% endblock %}
 
 {% block body %}
+    <div id="mySidenav" class="sidenav form-dark">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                {% for place in places %}
+                    {% set place = {
+                        id: place.id,
+                        libelle: place.libelle,
+                        city: place.city.id,
+                    } %}
+                    <div style="display: none" data-entry-place="{{ place|json_encode }}">
+                    </div>
+                {% endfor %}
+                <div class="m-2">
+                    <input placeholder="Rechercher" class="form-control" type="text" id="search">
+                    <label for="search"></label>
 
+                    <select class="form-control" id="selectVille">
+                        <option id="reset">Selectionner une ville</option>
+                        {% for city in cities %}
+                            <option value="{{ city.id }}" id="{{ city.id }}">{{ city.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="selectVille"></label>
 
-
-
-    <div id="mySidenav" class="sidenav">
-        {% for place in places %}
-            {% set place = {
-                id: place.id,
-                libelle: place.libelle,
-                city: place.city.id,
-            } %}
-            <div style="display: none" data-entry-place="{{ place|json_encode }}">
+                </div>
             </div>
-        {% endfor %}
+            <div class="col-lg-6 col-sm-12">
+                <div class="m-2">
+                    <div class="form-check w-50">
+                        <input type="checkbox" class="form-check-input checkfiltre" name="1" id="chck1" >
+                        <label class="form-check-label" for="chck1">Sorties dont je suis l'organisateur(trice)</label>
+                    </div>
+                    <div class="form-check w-50">
+                        <input type="checkbox" class="form-check-input checkfiltre" name="2" id="chck2">
+                        <label class="form-check-label" for="chck2">Sorties auxquelles je suis inscrit(e)</label>
+                    </div>
+                    <div class="form-check w-50">
+                        <input type="checkbox" class="form-check-input checkfiltre" name="3" id="chck3">
+                        <label class="form-check-label" for="chck3">Sorties auxquelles je ne suis pas inscrit(e)</label>
+                    </div>
+                    <div class="form-check w-20">
+                        <input type="checkbox" class="form-check-input checkfiltre" name="4" id="chck4">
+                        <label class="form-check-label" for="chck4">Sorties passées</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         {#<div data-entry-place="{{ places|json_encode }}"></div>#}
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-        <div style="margin-top: 30px; margin-left: 20px;">
-            <input placeholder="Rechercher" class="form-control w-25" type="text" id="search">
-            <label for="search"></label>
-
-            <select class="form-control w-25" id="selectVille">
-                <option id="reset">Selectionner une ville</option>
-                {% for city in cities %}
-                    <option value="{{ city.id }}" id="{{ city.id }}">{{ city.libelle }}</option>
-                {% endfor %}
-            </select>
-            <label for="selectVille"></label>
-
-        </div>
-        <div style="margin-left: 500px; margin-top: -125px">
-            <div class="form-check w-50">
-                <input type="checkbox" class="form-check-input checkfiltre" name="1" id="chck1" >
-                <label class="form-check-label" for="chck1">Sorties dont je suis l'organisateur(trice)</label>
-            </div>
-            <div class="form-check w-50">
-                <input type="checkbox" class="form-check-input checkfiltre" name="2" id="chck2">
-                <label class="form-check-label" for="chck2">Sorties auxquelles je suis inscrit(e)</label>
-            </div>
-            <div class="form-check w-50">
-                <input type="checkbox" class="form-check-input checkfiltre" name="3" id="chck3">
-                <label class="form-check-label" for="chck3">Sorties auxquelles je ne suis pas inscrit(e)</label>
-            </div>
-            <div class="form-check w-20">
-                <input type="checkbox" class="form-check-input checkfiltre" name="4" id="chck4">
-                <label class="form-check-label" for="chck4">Sorties passées</label>
-            </div>
-        </div>
     </div>
 
 
