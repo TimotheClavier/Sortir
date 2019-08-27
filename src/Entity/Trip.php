@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -73,7 +72,6 @@ class Trip implements \Serializable
     private $description;
 
     /**
-     * @MaxDepth(2)
      * @ORM\ManyToOne(targetEntity="User", inversedBy="organisedTrips")
      */
     private $organizer;
@@ -92,7 +90,6 @@ class Trip implements \Serializable
     /**
      * One Product has One Shipment.
      * @ManyToOne(targetEntity="Place", inversedBy="trips")
-     * @MaxDepth(2)
      */
     private $place;
 
@@ -105,7 +102,6 @@ class Trip implements \Serializable
     /**
      * user[]
      * Many Groups have Many Users.
-     * @MaxDepth(2)
      * @ManyToMany(targetEntity="User", mappedBy="trips")
      */
     private $users;

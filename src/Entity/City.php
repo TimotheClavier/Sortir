@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
-class City
+class City implements \JsonSerializable
 {
     /**
      * Hook SoftDeleteable behavior
@@ -89,6 +89,9 @@ class City
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         // Or change the property that you want to show in the select.
@@ -96,4 +99,19 @@ class City
     }
 
 
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id'        =>  $this->id,
+            'libelle'   =>  $this->libelle,
+            'postalCode'    =>  $this->PostalCode
+        ];
+    }
 }

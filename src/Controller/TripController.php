@@ -20,10 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
+
 
 
 /**
@@ -196,10 +193,10 @@ class TripController extends Controller
     public function edit(Request $request, Trip $trip): Response
     {
         $status = $this->getDoctrine()->getRepository(Situation::class)->findAll();
-        $places = $this->getDoctrine()->getRepository(Place::class)->findAll();
+        $cities = $this->getDoctrine()->getRepository(City::class)->findAll();
 
         $form = $this->createForm(TripType::class, $trip,
-            ['status'=>$status,'places' => $places]);
+            ['status'=>$status,'cities' => $cities]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -231,7 +228,6 @@ class TripController extends Controller
      * @param Request $request
      * @param CityRepository $cityRepository
      * @param PlaceRepository $placeRepository
-     * @param SerializerInterface $serializer
      * @return Response
      */
     public function getPlace(Request $request, CityRepository $cityRepository ,

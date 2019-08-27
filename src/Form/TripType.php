@@ -63,17 +63,6 @@ class TripType extends AbstractType
                     'class' => 'md-textarea form-control'
                 ]
             ])
-            ->add('status', ChoiceType::class, [
-                'choices' => $options['status'],
-                'choice_label' => 'libelle',
-                'choice_value' => function (Situation $situation = null) {
-                    return $situation ? $situation->getId() : '';
-                },
-                'label' => 'Etat : ',
-                'attr' => [
-                    'class' => 'browser-default'
-                ]
-            ])
             ->add('city', ChoiceType::class, [
                 'choices' => $options['cities'],
                 'mapped' => false,
@@ -84,7 +73,7 @@ class TripType extends AbstractType
                 'label' => 'Ville :',
             ])
             ->add('place', ChoiceType::class, [
-                'label' => 'Site'
+                'label' => 'Site :'
             ])
             ->add('coverImage' ,FileType::class, [
                 'label' => null,
@@ -122,6 +111,10 @@ class TripType extends AbstractType
                     'attr' => [
                         'class'=>'btn btn-outline-info'
                     ]
+                ])
+            ->add('formCity', CityType::class,
+                [
+                    'mapped'=>false,
                 ])
         ;
     }

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -72,13 +71,11 @@ class Place implements \JsonSerializable
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
      * @JoinColumn(name="city_id", referencedColumnName="id")
-     * @MaxDepth(2)
      */
     private $city;
 
     /**
      * @var Trip[]
-     * @MaxDepth(2)
      * @ORM\OneToMany(targetEntity="Trip", mappedBy="place", cascade={"remove"})
      */
     private $trips;
@@ -199,5 +196,10 @@ class Place implements \JsonSerializable
             'latitude'  =>  $this->latitude,
             'longitude' =>  $this->longitude
         ];
+    }
+
+    public function __toString()
+    {
+        return $this->libelle;
     }
 }
