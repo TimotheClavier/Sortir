@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Place;
 use App\Entity\Situation;
 use App\Entity\Trip;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,11 +29,17 @@ class TripType extends AbstractType
                 ]
             ])
             ->add('tripDate', DateTimeType::class, [
-                'label' => 'Date'
+                'label' => 'Date',
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('inscriptionDate' ,DateTimeType::class, [
-                'label' => 'Date d\'inscription',
+                'label' => 'Date limite d\'inscription',
+                'widget' => 'single_text',
                 'attr'   => [
+                    'class' => 'form-control',
                     'min' => ( new \DateTime() )->format('Y-m-d H:i:s')
                 ]
             ])
@@ -55,24 +63,17 @@ class TripType extends AbstractType
                     'class' => 'md-textarea form-control'
                 ]
             ])
-            ->add('status', ChoiceType::class, [
-                'choices' => $options['status'],
+            ->add('city', ChoiceType::class, [
+                'choices' => $options['cities'],
+                'mapped' => false,
                 'choice_label' => 'libelle',
-                'choice_value' => function (Situation $situation = null) {
-                    return $situation ? $situation->getId() : '';
+                'choice_value' => function (City $city = null) {
+                    return $city ? $city->getId() : '';
                 },
-                'label' => 'Etat : ',
-                'attr' => [
-                    'class' => 'browser-default'
-                ]
+                'label' => 'Ville :',
             ])
             ->add('place', ChoiceType::class, [
-                'choices' => $options['places'],
-                'choice_label' => 'libelle',
-                'choice_value' => function (Place $place = null) {
-                    return $place ? $place->getId() : '';
-                },
-                'label' => 'Site'
+                'label' => 'Site :'
             ])
             ->add('coverImage' ,FileType::class, [
                 'label' => null,
@@ -97,6 +98,24 @@ class TripType extends AbstractType
                     ])
                 ],
             ])
+            ->add('save', SubmitType::class,
+                [
+                    'label' => 'Confirmer',
+                    'attr' => [
+                        'class'=>'btn btn-success',
+                    ]
+                ])
+            ->add('publish', SubmitType::class,
+                [
+                    'label' => 'Publier',
+                    'attr' => [
+                        'class'=>'btn btn-outline-info'
+                    ]
+                ])
+            ->add('formCity', CityType::class,
+                [
+                    'mapped'=>false,
+                ])
         ;
     }
 
@@ -105,7 +124,7 @@ class TripType extends AbstractType
         $resolver->setDefaults([
             'data_class'    => Trip::class,
             'status'        => null,
-            'places'        => null
+            'cities'        => null
         ]);
     }
 }
