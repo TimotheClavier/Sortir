@@ -10,18 +10,6 @@ $(document).ready(function () {
     $('.pagination').children(":last").children(":last").html("<i class='fas fa-angle-right fa-2x'></i>");
     $('.pagination').children(":last").attr("style","margin-top:-7px");
 
-
-
-  $('select').addClass('browser-default custom-select')
-  $('[data-toggle="popover-hover"]').popover({
-    html: true,
-    trigger: 'hover',
-    placement: 'bottom',
-    content: function () {
-      return '<img src="' + $(this).data('img') + '" />'
-    }
-  })
-
   $('select').addClass('browser-default custom-select')
   $('[data-toggle="popover-hover"]').popover({
     html: true,
@@ -60,67 +48,6 @@ $(document).ready(function () {
     })
 
   })
-
-  $('#selectVille').change(function () {
-
-      let city = $(this).val()
-      console.log(city)
-      $.ajax({
-          url: "a",
-          type: "POST",
-          dataType: "json",
-          data: {
-              "city": city,
-
-          },
-          async: true,
-          success: function (data) {
-              console.log(data);
-          }
-      });
-  })
-/*
-    var nb = $('#selectVille option:selected').attr('id')
-    var entryPlaces = $('[data-entry-place]')
-    var entryElements = $('[data-entry-info]')
-
-    var entryPlace =
-      $.map(entryPlaces, item => $(item).data('entryPlace'))
-    var entryIds =
-      $.map(entryElements, item => $(item).data('entryInfo'))
-
-
-
-
-    entryPlace.forEach(function (val, ind) {
-      if (val.city == nb) {
-        entryIds.forEach(function (value, index) {
-          var res = ''
-          if (val.id != value.place_id) {
-            res = 'none'
-          } else {
-            res = ''
-          }
-          var id = '#' + value.id
-          $(id).css('display', res)
-        })
-
-      } else if (nb == 'reset') {
-        entryIds.forEach(function (value, index) {
-          var id = '#' + value.id
-          $(id).css('display', '')
-
-                });
-            }
-
-
-
-
-
-        })
-
-    });
-*/
 
     $('.checkfiltre').on('click', function () {
         var entryElements = $('[data-entry-info]');
@@ -381,6 +308,7 @@ $(document).ready(function () {
 
     }
   }
+
 })
 
 function eventConfirm() {

@@ -1,105 +1,111 @@
 {{ form_start(form) }}
-<div class="row">
-    <div class="col-lg-4 col-sm-12">
-        <div class="md-form">
-            {{ form_label(form.name) }}
-            {{ form_widget(form.name) }}
-            <small class="form-text text-danger mb-4">
-                {{ form_errors(form.name) }}
-            </small>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-12">
-        {{ form_label(form.tripDate) }}
-        {{ form_widget(form.tripDate) }}
-        <small class="form-text text-danger mb-4">
-            {{ form_errors(form.tripDate) }}
-        </small>
-    </div>
-    <div class="col-lg-4 col-sm-12">
-        {{ form_label(form.inscriptionDate) }}
-        {{ form_widget(form.inscriptionDate) }}
-        <small class="form-text text-danger mb-4">
-            {{ form_errors(form.inscriptionDate) }}
-        </small>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-4 col-sm-12">
-        <div class="md-form">
-            {{ form_label(form.seat) }}
-            {{ form_widget(form.seat) }}
-            <small class="form-text text-danger mb-4">
-                {{ form_errors(form.seat) }}
-            </small>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-12">
-        <div class="md-form">
-            {{ form_label(form.duration) }}
-            {{ form_widget(form.duration) }}
-            <small class="form-text text-danger mb-4">
-                {{ form_errors(form.duration) }}
-            </small>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-12">
-        <div class="md-from">
-            <div class="file-field">
-                <div class="btn btn-outline-success btn-sm float-left">
-                    {{ form_label(form.coverImage) }}
-                    {{ form_widget(form.coverImage) }}
+<div class="card">
+<div class="card-body">
+    <h3 class="card-title">Sorties</h3>
+    <div class="card-text">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <div class="md-form">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    <small class="form-text text-danger mb-4">
+                        {{ form_errors(form.name) }}
+                    </small>
                 </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate form-control" type="text" placeholder="Upload">
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                {{ form_label(form.tripDate) }}
+                {{ form_widget(form.tripDate) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.tripDate) }}
+                </small>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                {{ form_label(form.inscriptionDate) }}
+                {{ form_widget(form.inscriptionDate) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.inscriptionDate) }}
+                </small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <div class="md-form">
+                    {{ form_label(form.seat) }}
+                    {{ form_widget(form.seat) }}
+                    <small class="form-text text-danger mb-4">
+                        {{ form_errors(form.seat) }}
+                    </small>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="md-form">
+                    {{ form_label(form.duration) }}
+                    {{ form_widget(form.duration) }}
+                    <small class="form-text text-danger mb-4">
+                        {{ form_errors(form.duration) }}
+                    </small>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="md-from">
+                    <div class="file-field">
+                        <div class="btn btn-outline-success btn-sm float-left">
+                            {{ form_label(form.coverImage) }}
+                            {{ form_widget(form.coverImage) }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate form-control" type="text" placeholder="Upload">
+                        </div>
+                    </div>
+                </div>
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.coverImage) }}
+                </small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="md-form">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                    <small class="form-text text-danger mb-4">
+                        {{ form_errors(form.description) }}
+                    </small>
                 </div>
             </div>
         </div>
-        <small class="form-text text-danger mb-4">
-            {{ form_errors(form.coverImage) }}
-        </small>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="md-form">
-            {{ form_label(form.description) }}
-            {{ form_widget(form.description) }}
-            <small class="form-text text-danger mb-4">
-                {{ form_errors(form.description) }}
-            </small>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.city) }}
+                </small>
+                <div class="col-lg-6 col-sm-12">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#add_city_modal">Ajouter</a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12">
+                {{ form_label(form.place) }}
+                {{ form_widget(form.place) }}
+                <small class="form-text text-danger mb-4">
+                    {{ form_errors(form.place) }}
+                </small>
+                <div class="col-lg-6 col-sm-12">
+                    <a class="btn btn-success" data-toggle="modal" data-target="add_place_modal">Ajouter</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+
+            </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
-        {{ form_label(form.city) }}
-        {{ form_widget(form.city) }}
-        <small class="form-text text-danger mb-4">
-            {{ form_errors(form.city) }}
-        </small>
-        <div class="col-lg-6 col-sm-12">
-            <a class="btn btn-success" data-toggle="modal" data-target="#add_city_modal">Ajouter</a>
-        </div>
-    </div>
-
-    <div class="col-lg-6 col-sm-12">
-        {{ form_label(form.place) }}
-        {{ form_widget(form.place) }}
-        <small class="form-text text-danger mb-4">
-            {{ form_errors(form.place) }}
-        </small>
-        <div class="col-lg-6 col-sm-12">
-            <a class="btn btn-success" data-toggle="modal" data-target="add_place_modal">Ajouter</a>
-        </div>
-    </div>
 </div>
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
-
-    </div>
-</div>
-
 <div class="row">
     <div class="col-12">
         {{ form_widget(form.save) }}
@@ -107,11 +113,6 @@
         <a href="{{ path('Index') }}" class="btn btn-outline-primary">Retour</a>
     </div>
 </div>
-
-
-
-
-
+{{ form_end(form) }}
 {{ include('includes/add_city_modal.html.twig', { 'form': form }) }}
 {{ include('includes/add_place_modal.html.twig') }}
-{{ form_end(form) }}
