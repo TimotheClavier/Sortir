@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Situation;
-use App\Entity\Place;
 use App\Entity\Trip;
 use App\Form\TripType;
 use App\Repository\CityRepository;
@@ -68,6 +67,8 @@ class TripController extends Controller
             {
                 $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
                 $trip->setCoverImage('img/trips/'.$fileName);
+            } else {
+                $trip->setCoverImage('img/trips/default.png');
             }
 
             $created = $entityManager->getRepository(Situation::class)->find(1);
@@ -87,6 +88,204 @@ class TripController extends Controller
         return $this->render('trip/new.html.twig', [
             'trip' => $trip,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="trip_search", methods={"POST"})
+     * @param Request $request
+     * @param TripRepository $tripRepository
+     * @param CityRepository $cityRepository
+     * @return Response
+     */
+    public function search(Request $request, TripRepository $tripRepository, CityRepository $cityRepository)
+    {
+        $trips = $tripRepository->findBy([], ['tripDate' => 'DESC'], 500);
+        $option = 0;
+        $search = "";
+        $city = [];
+
+        if ($request->request->get('search') !== "") {
+            $search = $request->request->get('search');
+            $option += 1;
+        }
+
+        if ($request->request->get('city') != 'none') {
+            $city = $cityRepository->find($request->request->get('city'));
+            $option += 2;
+        }
+
+        if ($request->request->has('group')) {
+            $option += $request->request->get('group');
+        }
+
+        switch ($option) {
+            case 1:
+                $trips = $tripRepository->findByName($search);
+                break;
+            case 2:
+                $trips = $tripRepository->findByCity($city);
+                break;
+            case 3:
+                $trips = $tripRepository->findByCityAndName($city, $search);
+                break;
+            case 4:
+                $trips = $this->getUser()->getOrganisedTrips();
+                break;
+            case 5:
+                $organiser = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    if (stripos($trip->getName(), $search) !== false) {
+                        $organiser[] = $trip;
+                    }
+                }
+                $trips = $organiser;
+                break;
+            case 7:
+                $organiser = [];
+                $trips = $tripRepository->findByCityAndName($city, $search);
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    if ($trip->getOrganizer() == $this->getUser()) {
+                        $organiser[] = $trip;
+                    }
+                }
+                $trips = $organiser;
+                break;
+            case 8:
+                $trips = $this->getUser()->getTrips();
+                break;
+            case 9:
+                $subscribed = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    if (stripos($trip->getName(), $search) !== false) {
+                        $subscribed[] = $trip;
+                    }
+                }
+                $trips = $subscribed;
+                break;
+            case 10:
+                $trips = $tripRepository->findByCity($city);
+                $subscribed = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $subscribed[] = $trip;
+                        }
+                    }
+                }
+                $trips = $subscribed;
+                break;
+            case 11:
+                $trips = $tripRepository->findByCityAndName($city, $search);
+                $subscribed = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $subscribed[] = $trip;
+                        }
+                    }
+                }
+                $trips = $subscribed;
+                break;
+            case 16:
+                $trips = $tripRepository->findBy([], [], 500);
+                /** @var Trip[] $trips */
+                foreach ($trips as $key => $trip) {
+                    $is = false;
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $is = true;
+                        }
+                    }
+                    if ($is) {
+                        unset($trips[$key]);
+                    }
+                }
+                break;
+            case 17:
+                $trips = $tripRepository->findByName($search);
+                /** @var Trip[] $trips */
+                foreach ($trips as $key => $trip) {
+                    $is = false;
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $is = true;
+                        }
+                    }
+                    if ($is) {
+                        unset($trips[$key]);
+                    }
+                }
+                break;
+            case 18:
+                $trips = $tripRepository->findByCity($city);
+                /** @var Trip[] $trips */
+                foreach ($trips as $key => $trip) {
+                    $is = false;
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $is = true;
+                        }
+                    }
+                    if ($is) {
+                        unset($trips[$key]);
+                    }
+                }
+                break;
+            case 19:
+                $trips = $tripRepository->findByCityAndName($city, $search);
+                /** @var Trip[] $trips */
+                foreach ($trips as $key => $trip) {
+                    $is = false;
+                    foreach ($trip->getUsers() as $user) {
+                        if ($user == $this->getUser()) {
+                            $is = true;
+                        }
+                    }
+                    if ($is) {
+                        unset($trips[$key]);
+                    }
+                }
+                break;
+            case 32:
+                $trips = $tripRepository->findPast();
+                break;
+            case 33:
+                $trips = $tripRepository->findPast();
+                $array = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    if (stripos($trip->getName(), $search) !== false) {
+                        $array[] = $trip;
+                    }
+                }
+                $trips = $array;
+                break;
+            case 34:
+                $trips = $tripRepository->findPastByCity($city);
+                break;
+            case 35:
+                $array = [];
+                /** @var Trip[] $trips */
+                foreach ($trips as $trip) {
+                    if (stripos($trip->getName(), $search) !== false) {
+                        $array[] = $trip;
+                    }
+                }
+                $trips = $array;
+                break;
+        }
+
+
+        $cities = $cityRepository->findBy([], ['libelle' => 'ASC']);
+        return $this->render('trip/search.html.twig', [
+            'trips' => $trips,
+            'cities' => $cities
         ]);
     }
 
@@ -117,11 +316,7 @@ class TripController extends Controller
 
 
         $user = $this->getUser();
-
-
-        $trip->setSeat($trip->getSeat() - 1);
-
-
+        
         $trip->addUser($user);
         $user->addTrip($trip);
 

@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('#trip_city').change( function(){
         let city = $(this).val();
         $.ajax({
-            url:'/sorties/ajax_request_place',
+            url:'/sortir/public/sorties/ajax_request_place',
             type: "POST",
             dataType: "json",
             data: {
