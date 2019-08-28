@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    console.log(window.location)
     $('#trip_city').change( function(){
         let city = $(this).val();
         $.ajax({

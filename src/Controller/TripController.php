@@ -316,7 +316,7 @@ class TripController extends Controller
 
 
         $user = $this->getUser();
-        
+
         $trip->addUser($user);
         $user->addTrip($trip);
 
