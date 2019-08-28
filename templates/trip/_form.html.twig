@@ -87,19 +87,19 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-sm-12">
-                {{ form_label(form.place) }}
-                {{ form_widget(form.place) }}
-                <small class="form-text text-danger mb-4">
-                    {{ form_errors(form.place) }}
-                </small>
-                <div class="col-lg-6 col-sm-12">
-                    <a class="btn btn-success" data-toggle="modal" data-target="add_place_modal">Ajouter</a>
-                </div>
-            </div>
+    <div class="col-lg-6 col-sm-12">
+        {{ form_label(form.place) }}
+        {{ form_widget(form.place) }}
+        <small class="form-text text-danger mb-4">
+            {{ form_errors(form.place) }}
+        </small>
+        <div class="col-lg-6 col-sm-12">
+            <a class="btn btn-success" data-toggle="modal" data-target="#add_place_modal">Ajouter</a>
         </div>
-        <div class="row">
-            <div class="col-lg-6 col-sm-12">
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-sm-12">
 
             </div>
         </div>
@@ -114,5 +114,10 @@
     </div>
 </div>
 {{ form_end(form) }}
-{{ include('includes/add_city_modal.html.twig', { 'form': form }) }}
-{{ include('includes/add_place_modal.html.twig') }}
+
+{{ form_start(formCity) }}
+{{ include('includes/add_city_modal.html.twig', { 'form': formCity }) }}
+{{ form_end(formCity) }}
+
+
+{{ include('includes/add_place_modal.html.twig', { 'form':formPlace }) }}
