@@ -22,11 +22,17 @@
             <h4 class="card-title"><strong>{{ trip.name }}</strong></h4>
             <h6 class="card-title">{{ trip.tripDate.format('d F Y') }}</h6>
             <!-- Subtitle -->
-            <h6 class="font-weight-bold green-text py-2"><i class="{{ trip.status.icon }}"></i> {{ trip.status }}
+            <h6 class="font-weight-bold green-text py-2">
+                <i class="{{ trip.status.icon }}"></i>
+                {{ trip.status }}
             </h6>
             <!-- Text -->
             <p class="card-text">
-                {{ trip.description }}
+                {% if trip.status.id == 6 %}
+                    {{ trip.cause }}
+                {% else %}
+                    {{ trip.description }}
+                {% endif %}
             </p>
             <div class="container">
 
@@ -45,7 +51,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        {{ trip.duration / 60 }}h
+                        {{ (trip.duration / 60)|round(1, 'floor') }}h
                     </div>
                     <div class="col-4">
                         <p class="card-subtitle">

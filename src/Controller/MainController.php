@@ -28,7 +28,6 @@ class MainController extends Controller
      * @param CityRepository $cityRepository
      * @param EntityManagerInterface $em
      * @return Response
-     * @throws DBALException
      */
     public function index(AuthenticationUtils $authenticationUtils,
                           Request $request,
@@ -38,52 +37,18 @@ class MainController extends Controller
                           CityRepository $cityRepository,
                           EntityManagerInterface $em)
     {
-        $res = [];
-
-        dump('toto');
-        //die;
-        dump($request);
         $user = $this->getUser();
         if ($user !== null) {
 
             /** @var Trip[] $trips */
             $lesTrips = $tripRepository->findBy([], ['tripDate' => 'DESC']);
-            $cities = $cityRepository->findAll();
-            $places = $placesRepository->findAll();
-            $rawSql = "SELECT user_id , trip_id  FROM users_trips  WHERE user_id = :iduser";
-
-            $stmt = $em->getConnection()->prepare($rawSql);
-
-            $stmt->execute(array('iduser' => $user->getId()));
-
-            $userTrips = $stmt->fetchAll();
-
-            //$trips = array_chunk($lesTrips, 3);
-
-            $em = $this->getDoctrine()->getManager();
-//            $allOurBlogPosts = $em->getRepository('App:Trip')->findAll();
-
+            $cities = $cityRepository->findBy([], ['libelle' => 'ASC']);
             $paginator  = $this->get('knp_paginator');
-
-            $pagination = $paginator->paginate(
-                $lesTrips,
-                $request->query->getInt('page', 1),
-                3
-            );
-
-            /*$response = new Response(json_encode(array(
-                'pagination' => $pagination,
-            )));
-            $response->headers->set('Content-Type', 'application/json');*/
+            $pagination = $paginator->paginate($lesTrips, $request->query->getInt('page', 1),3);
 
             return $this->render('index.html.twig', [
-                'trips' => $lesTrips,
                 'pagination' => $pagination,
-                'userTrips' => $userTrips,
-                'user' => $user,
-                'cities' => $cities,
-                'places' => $places,
-                'date' => new \DateTime(),
+                'cities' => $cities
             ]);
         } else {
             $error = $authenticationUtils->getLastAuthenticationError();

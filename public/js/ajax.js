@@ -9,7 +9,7 @@ $(document).ready(function () {
         let libelle = $('#city_libelle').val();
         let zipCode = $('#city_PostalCode').val();
         $.ajax({
-            url:'/ajax_add_city',
+            url:'/sortir/public/ajax_add_city',
             type: "POST",
             dataType: "json",
             data: {
@@ -72,7 +72,7 @@ $(document).ready(function () {
 
 function getPlaces(city) {
     $.ajax({
-        url:'/sorties/ajax_request_place',
+        url:'/sortir/public/sorties/ajax_request_place',
         type: "POST",
         dataType: "json",
         data: {
