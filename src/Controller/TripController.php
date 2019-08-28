@@ -119,7 +119,6 @@ class TripController extends Controller
             $option += $request->request->get('group');
         }
 
-        dump($option);
         switch ($option) {
             case 1:
                 $trips = $tripRepository->findByName($search);
@@ -317,11 +316,7 @@ class TripController extends Controller
 
 
         $user = $this->getUser();
-
-
-        $trip->setSeat($trip->getSeat() - 1);
-
-
+        
         $trip->addUser($user);
         $user->addTrip($trip);
 
