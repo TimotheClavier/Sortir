@@ -56,10 +56,10 @@ class TripService
         foreach ($trips as $trip) {
             $endDate = new \DateTime($trip->getTripDate()->format('c'));
             $endDate->modify('+' . $trip->getDuration() . ' minutes');
-            if ($trip->getStatus()->getId() == 1) {
+            if ($trip->getStatus()->getId() == 1 || $trip->getStatus()->getId() == 6) {
                 continue;
             }
-            if ($now > $trip->getInscriptionDate()) {
+            if ($now > $trip->getInscriptionDate() || $trip->getSeat() == count($trip->getUsers())) {
                 $trip->setStatus($situationsByID[3]);
             }
             if ($now > $trip->getTripDate()) {
@@ -75,9 +75,8 @@ class TripService
     public function deleteOldTrips()
     {
         $entityManager = $this->container->get('doctrine')->getManager();
-        $now = new \DateTime();
+        $now = new \DateTime('', new \DateTimeZone('Europe/Paris'));
         $now->modify('-1 Months');
-        $now->modify('+2 hours');
 
         /** @var Trip[] $trips */
         $trips = $this->container->get('doctrine')->getRepository(Trip::class)->findAll();

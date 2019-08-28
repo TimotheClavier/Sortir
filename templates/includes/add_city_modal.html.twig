@@ -12,26 +12,26 @@
                     <div class="md-form">
                         <div class="row">
                             <div class="col-12">
-                                {{ form_label(form.formCity.libelle) }}
-                                {{ form_widget(form.formCity.libelle) }}
+                                {{ form_label(formCity.libelle) }}
+                                {{ form_widget(formCity.libelle) }}
                                 <small class="form-text text-danger mb-4">
-                                    {{ form_errors(form.formCity.libelle) }}
+                                    {{ form_errors(formCity.libelle) }}
                                 </small>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                {{ form_label(form.formCity.PostalCode) }}
-                                {{ form_widget(form.formCity.PostalCode) }}
+                                {{ form_label(formCity.PostalCode) }}
+                                {{ form_widget(formCity.PostalCode) }}
                                 <small class="form-text text-danger mb-4">
-                                    {{ form_errors(form.formCity.PostalCode) }}
+                                    {{ form_errors(formCity.PostalCode) }}
                                 </small>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="closeCityModalBtn" class="btn btn-outline-primary" data-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-success" id="addCityModalBtn">Enregistrer</button>
                 </div>
             </div>

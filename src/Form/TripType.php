@@ -112,10 +112,6 @@ class TripType extends AbstractType
                         'class'=>'btn btn-outline-info'
                     ]
                 ])
-            ->add('formCity', CityType::class,
-                [
-                    'mapped'=>false,
-                ])
         ;
     }
 
