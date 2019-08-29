@@ -306,6 +306,27 @@ class TripController extends Controller
     }
 
     /**
+     * @Route("/publish/{id}", name="trip_publish")
+     * @param Trip $trip
+     * @param SituationRepository $situationRepository
+     * @param TripRepository $tripRepository
+     * @return Response
+     */
+    public function publish(Trip $trip, SituationRepository $situationRepository, TripRepository $tripRepository)
+    {
+        $status = $situationRepository->find(2);
+        $trip->setStatus($status);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($trip);
+        $entityManager->flush();
+
+        $this->addFlash('Success', 'Evénement publiée !!');
+        return $this->render('trip/show.html.twig', [
+            'trip' => $trip
+        ]);
+    }
+
+    /**
      * @Route("/show/{id}", name="trip_show", methods={"GET"})
      * @param Trip $trip
      * @return Response

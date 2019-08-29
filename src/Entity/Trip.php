@@ -47,7 +47,7 @@ class Trip implements \Serializable
 
     /**
      * @Assert\GreaterThan("today", message="La date d'inscription doit être suppérieur à aujourd'hui")
-     * @Assert\LessThan(propertyPath="tripDate", message="La date d'inscription doit être suppérieur au {{ compared_value }}")
+     * @Assert\LessThan(propertyPath="tripDate", message="La date d'inscription doit être inférieur au {{ compared_value }}")
      * @ORM\Column(type="datetime")
      */
     private $inscriptionDate;
