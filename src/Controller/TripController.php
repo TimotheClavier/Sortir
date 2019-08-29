@@ -15,6 +15,7 @@ use App\Repository\PlaceRepository;
 use App\Repository\SituationRepository;
 use App\Repository\TripRepository;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Utils\UploadUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -423,16 +424,25 @@ class TripController extends Controller
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Trip $trip
+     * @param EntityManager $entityManager
      * @return Response
      */
     public function edit(Request $request, Trip $trip): Response
     {
+
         $status = $this->getDoctrine()->getRepository(Situation::class)->findAll();
         $cities = $this->getDoctrine()->getRepository(City::class)->findAll();
 
         $form = $this->createForm(TripType::class, $trip,
             ['status'=>$status,'cities' => $cities]);
         $form->handleRequest($request);
+
+
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+
+        $place = new Place();
+        $formPlace = $this->createForm(AjaxPlaceType::class, $place);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -445,6 +455,13 @@ class TripController extends Controller
                 $fileName = $upload->upload($img,$this->getParameter('trips_pictures'));
                 $trip->setCoverImage('img/trips/'.$fileName);
             }
+            $created = $this->getDoctrine()->getRepository(Situation::class)->find(1);
+            $published = $this->getDoctrine()->getRepository(Situation::class)->find(2);
+
+            $tripStatus = $form->get('publish')->isClicked() ? $published : $created;
+            $trip->setStatus($tripStatus);
+
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('Success', 'Modifications enregistrées !');
 
@@ -455,6 +472,8 @@ class TripController extends Controller
         return $this->render('trip/edit.html.twig', [
             'trip' => $trip,
             'form' => $form->createView(),
+            'formCity'=> $formCity->createView(),
+            'formPlace'=> $formPlace->createView()
         ]);
     }
 
