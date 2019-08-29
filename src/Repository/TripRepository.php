@@ -6,11 +6,6 @@ use App\Entity\City;
 use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use InvalidArgumentException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class TripRepository extends ServiceEntityRepository

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PlaceController extends Controller
 {
+
     /**
      * @Route("/", name="place_index", methods={"GET"})
      * @param PlaceRepository $placeRepository
@@ -31,6 +32,7 @@ class PlaceController extends Controller
     /**
      * @Route("/new", name="place_new", methods={"GET","POST"})
      * @param Request $request
+     * @param CityRepository $cityRepository
      * @return Response
      */
     public function new(Request $request, CityRepository $cityRepository): Response
@@ -57,6 +59,8 @@ class PlaceController extends Controller
 
     /**
      * @Route("/{id}", name="place_show", methods={"GET"})
+     * @param Place $place
+     * @return Response
      */
     public function show(Place $place): Response
     {

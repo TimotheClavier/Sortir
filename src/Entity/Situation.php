@@ -30,6 +30,7 @@ class Situation
      */
     private $libelle;
 
+
     public function getId()
     {
         return $this->id;

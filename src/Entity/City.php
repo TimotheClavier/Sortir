@@ -59,7 +59,6 @@ class City implements \JsonSerializable
     private $places;
 
 
-
     public function getId()
     {
         return $this->id;
@@ -113,7 +112,6 @@ class City implements \JsonSerializable
         // Or change the property that you want to show in the select.
         return $this->libelle;
     }
-
 
     /**
      * Specify data which should be serialized to JSON

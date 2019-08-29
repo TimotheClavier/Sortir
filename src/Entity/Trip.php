@@ -106,6 +106,7 @@ class Trip implements \Serializable
      */
     private $users;
 
+
     /**
      * Trip constructor.
      */
@@ -284,7 +285,6 @@ class Trip implements \Serializable
 
         return $this;
     }
-
 
     /**
      * @return string
