@@ -82,6 +82,9 @@ class TripController extends Controller
                 $trip->setCoverImage('img/trips/default.png');
             }
 
+            $place = $entityManager->getRepository(Place::class)->find($form['place']->getData());
+            $trip->setPlace($place);
+
             $created = $entityManager->getRepository(Situation::class)->find(1);
             $published = $entityManager->getRepository(Situation::class)->find(2);
 
