@@ -24,9 +24,6 @@ class ProfileFormType extends AbstractType
     {
         $profile = $options['profile'];
 
-        $cities = [];
-
-
         $builder
             ->add('nom', TextType::class, [
                 'attr' => [

@@ -255,7 +255,7 @@ class User implements UserInterface
         return $this->city;
     }
 
-    public function setCity(City $city)
+    public function setCity($city)
     {
         $this->city = $city;
 
