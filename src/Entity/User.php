@@ -316,7 +316,6 @@ class User implements UserInterface
         }
     }
 
-
     /**
      * @return Trip[]
      */
@@ -356,7 +355,4 @@ class User implements UserInterface
     {
       return $this->nom.' '.$this->prenom;
     }
-
-
-
 }

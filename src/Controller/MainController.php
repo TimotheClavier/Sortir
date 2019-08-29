@@ -6,7 +6,6 @@ use App\Entity\Trip;
 use App\Repository\CityRepository;
 use App\Repository\PlaceRepository;
 use App\Repository\TripRepository;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,6 +60,4 @@ class MainController extends Controller
             ]);
         }
     }
-
-
 }

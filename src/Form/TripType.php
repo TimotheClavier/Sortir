@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\City;
-use App\Entity\Place;
-use App\Entity\Situation;
 use App\Entity\Trip;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -82,13 +80,8 @@ class TripType extends AbstractType
                 'attr' => [
                     'class' => 'file-upload'
                 ],
-                // make it optional so you don't have to re-upload the file
                 'mapped' => false,
-                // everytime you edit the Product details
                 'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\File([
                         'mimeTypes' => [

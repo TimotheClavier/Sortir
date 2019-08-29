@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,7 +104,6 @@ class UserController extends Controller
     {
         $user = $this->getUser();
         $form = $this->createUserForm($user, $request);
-        dump($user);
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('app_profile');
         } else {
@@ -131,6 +131,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return FormInterface
+     */
     public function createUserForm(User $user, Request $request)
     {
         $upload = new UploadUtils();
@@ -169,11 +174,8 @@ class UserController extends Controller
 
             return $form;
         }
-
-
         return $form;
     }
-
 
     /**
      * @Route("/profile/{id}", name="user_show", methods={"GET"})
@@ -224,7 +226,7 @@ class UserController extends Controller
      * @Route("/forgotten_password", name="app_forgotten_password")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
-     * @param \Swift_Mailer $mailer
+     * @param Swift_Mailer $mailer
      * @param TokenGeneratorInterface $tokenGenerator
      * @return Response
      */
@@ -266,10 +268,6 @@ class UserController extends Controller
             $mailer->send($message);
 
             $this->addFlash('Succes', 'Mail envoyé');
-
-//            return $this->render('user/email.html.twig', [
-//                'email' =>$body,
-//            ]);
             $this->redirectToRoute('Index');
         }
 
@@ -305,10 +303,8 @@ class UserController extends Controller
 
             return $this->redirectToRoute('Index');
         }else {
-
             return $this->render('user/reset_password.html.twig', ['token' => $token]);
         }
-
     }
 
     /**
@@ -353,5 +349,4 @@ class UserController extends Controller
         }
         return $this->redirectToRoute('user_index');
     }
-
 }

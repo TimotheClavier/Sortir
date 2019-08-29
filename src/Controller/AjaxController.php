@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AjaxController extends Controller
 {
@@ -23,7 +22,6 @@ class AjaxController extends Controller
             'controller_name' => 'AjaxController',
         ]);
     }
-
 
     /**
      * @Route("/ajax_add_city", name="ajaxAddCity" , methods={"GET","POST"})
@@ -75,7 +73,6 @@ class AjaxController extends Controller
         $entityManager->flush();
 
         $places = $placeRepository->findby(['city' => $city]);
-        dump($places);
         return new JsonResponse($places);
 
     }

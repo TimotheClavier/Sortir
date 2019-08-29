@@ -2,12 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\City;
 use App\Entity\User;
-use PhpParser\Node\Scalar\MagicConst\File;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -75,12 +71,7 @@ class ProfileFormType extends AbstractType
                 'label' => 'Avatar : ',
                 'data_class' => null,
                 'mapped' => false,
-                // make it optional so you don't have to re-upload the PDF file
-                // everytime you edit the Product details
                 'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\File([
                         'mimeTypes' => [
