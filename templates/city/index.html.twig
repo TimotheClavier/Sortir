@@ -25,6 +25,7 @@
                         <td>
                             <a href="{{ path('city_show', {'id': city.id}) }}"><i class="fas fa-eye"></i></a>
                             <a href="{{ path('city_edit', {'id': city.id}) }}" class="green-text"><i class="fas fa-pen"></i></a>
+                            {{ include('city/_delete_form.html.twig') }}
                         </td>
                     </tr>
                 {% else %}

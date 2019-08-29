@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('city_delete', {'id': city.id}) }}" id="form_delete_city">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ city.id) }}">
-    <a class="btn btn-danger" onclick="cityConfirm()">Supprimer</a>
+    <a class="red-text" onclick="cityConfirm()"><i class="fas fa-trash"></i></a>
 </form>
