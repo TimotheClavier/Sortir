@@ -65,7 +65,7 @@
                         {% if trip.organizer.id == app.user.id %}
                             {% if trip.status.id <= 2 %}
                                 <a class="btn btn-outline-success"
-                                   href="{{ path('trip_edit', {'id': trip.id}) }}">Modifier
+                                   href="{{ path('trip_edit', { 'id': trip.id } ) }}">Modifier
                                 </a>
                             {% endif %}
                             {% if trip.status.id != 6 %}
@@ -73,10 +73,15 @@
                                     Annuler
                                 </a>
                             {% endif %}
+                            {% if trip.status.id == 1 %}
+                                <a  class="btn btn-outline-primary"
+                                    href="{{ path('trip_publish', { 'id': trip.id } ) }}">Publier
+                                </a>
+                            {% endif %}
                         {% else %}
                             {% if app.user in trip.users %}
                                 <a class="btn btn-outline-success"
-                                   href="{{ path('trip_unsubscrib', { 'id': trip.id }) }}">
+                                   href="{{ path('trip_unsubscrib', { 'id': trip.id } ) }}">
                                     <i class="fas fa-calendar-times"></i>
                                 </a>
                             {% else %}
