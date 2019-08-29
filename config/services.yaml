@@ -28,12 +28,17 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+  app.soft_delete_listener:
+    class: App\EventListener\CityListener
+    tags:
+      - { name: doctrine.event_listener, event: preRemove , piority: 10 }
+
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
   gedmo.listener.softdeleteable:
     class: Gedmo\SoftDeleteable\SoftDeleteableListener
     tags:
-      - { name: doctrine.event_subscriber, connection: default }
+      - { name: doctrine.event_subscriber, connection: default, priority: 1 }
     calls:
       - [ setAnnotationReader, [ '@annotation_reader' ] ]
 

@@ -100,10 +100,6 @@ class CityController extends Controller
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($city);
-            foreach ($city->getUsers() as $user) {
-                $user->setCity(null);
-                $entityManager->persist($user);
-            }
             $entityManager->flush();
             $this->addFlash('Success', 'Modifications enregistrées !');
         }
