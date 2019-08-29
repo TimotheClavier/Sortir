@@ -9,15 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=false)
  */
 class City implements \JsonSerializable
 {
-    /**
-     * Hook SoftDeleteable behavior
-     * updates deletedAt field
-     */
-    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id()
@@ -87,6 +81,22 @@ class City implements \JsonSerializable
         $this->PostalCode = $PostalCode;
 
         return $this;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsers(): array
+    {
+        return $this->users;
+    }
+
+    /**
+     * @return Place[]
+     */
+    public function getPlaces(): array
+    {
+        return $this->places;
     }
 
     /**

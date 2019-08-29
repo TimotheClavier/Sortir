@@ -86,6 +86,7 @@ class User implements UserInterface
     private $avatar;
 
     /**
+     * @Assert\NotBlank(message="la ville ne peut être vide")
      * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
      * @JoinColumn(nullable=true, name="city_id", referencedColumnName="id", onDelete="SET NULL")
      */

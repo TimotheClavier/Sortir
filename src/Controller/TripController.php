@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Situation;
+use App\Entity\Place;
 use App\Entity\Trip;
+use App\Form\AjaxPlaceType;
+use App\Form\CityType;
+use App\Form\PlaceType;
 use App\Form\TripType;
 use App\Repository\CityRepository;
 use App\Repository\PlaceRepository;
@@ -56,6 +60,13 @@ class TripController extends Controller
             [ 'status' => $status , 'cities' => $cities]);
         $form->handleRequest($request);
 
+        $city = new City();
+        $formCity = $this->createForm(CityType::class, $city);
+
+        $place = new Place();
+        $formPlace = $this->createForm(AjaxPlaceType::class, $place);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $trip->setOrganizer($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
@@ -88,6 +99,8 @@ class TripController extends Controller
         return $this->render('trip/new.html.twig', [
             'trip' => $trip,
             'form' => $form->createView(),
+            'formCity'=> $formCity->createView(),
+            'formPlace'=> $formPlace->createView(),
         ]);
     }
 
@@ -317,6 +330,11 @@ class TripController extends Controller
 
         $user = $this->getUser();
 
+        if ($trip->getSeat() == 0){
+            $trip->setStatus(6);
+        }
+
+
         $trip->addUser($user);
         $user->addTrip($trip);
 
@@ -349,8 +367,6 @@ class TripController extends Controller
         $stmt = $em->getConnection()->prepare($rawSql);
 
         $stmt->execute(array('iduser' => $user->getId(),'idtrip' => $trip->getId()));
-
-        $trip->setSeat($trip->getSeat() + 1);
 
         $entityManager->flush();
         $this->addFlash('Success', "Vous n'êtes plus inscrit !!");
