@@ -40,7 +40,7 @@ $(document).ready(function () {
         let city        = $('#trip_city').val();
 
         $.ajax({
-            url:'/ajax_add_place',
+            url:'/sortir/public/ajax_add_place',
             type: "POST",
             dataType: "json",
             data: {
@@ -60,7 +60,7 @@ $(document).ready(function () {
                     $('#trip_place').append(new Option(city.libelle, city.id));
                 });
                 Notiflix.Notify.Success('Modifications enregistrées !');
-                $("#closeCityModalBtn").click();
+                $("#closePlaceModalBtn").click();
             }
         })
     });
