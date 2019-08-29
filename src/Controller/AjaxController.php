@@ -58,7 +58,7 @@ class AjaxController extends Controller
      * @param PlaceRepository $placeRepository
      * @return JsonResponse
      */
-    public function ajaxAddPlace(Request $request, CityRepository $cityRepository,PlaceRepository $placeRepository)
+    public function ajaxAddPlace(Request $request, CityRepository $cityRepository, PlaceRepository $placeRepository)
     {
 
         $city = $cityRepository->find($request->get('city'));
@@ -70,16 +70,13 @@ class AjaxController extends Controller
         $place->setLongitude($request->get('longitude'));
         $place->setCity($city);
 
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $entityManager->persist($place);
-//        $entityManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($place);
+        $entityManager->flush();
 
-        $places = $placeRepository->findby(['city'=>$city]);
+        $places = $placeRepository->findby(['city' => $city]);
         dump($places);
         return new JsonResponse($places);
 
     }
-
-
-
 }
