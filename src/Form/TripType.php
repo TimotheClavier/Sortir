@@ -72,8 +72,9 @@ class TripType extends AbstractType
                 },
                 'label' => 'Ville :',
             ])
-            ->add('place', ChoiceType::class, [
-                'label' => 'Site :'
+            ->add('place', TextType::class, [
+                'label' => 'Site :',
+                'mapped' => false
             ])
             ->add('coverImage' ,FileType::class, [
                 'label' => null,

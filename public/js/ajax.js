@@ -1,6 +1,11 @@
 $(document).ready(function () {
     getPlaces($('#trip_city').val());
 
+    $("#trip_place")
+        .replaceWith('<select id="trip_place" name="trip[place]" class="browser-default custom-select">' +
+            '</select>');
+
+
     $('#trip_city').change( function(){
          getPlaces($(this).val());
     });
@@ -56,8 +61,8 @@ $(document).ready(function () {
                 console.log(data);
                 $('#trip_place').empty();
 
-                data.forEach(function(city) {
-                    $('#trip_place').append(new Option(city.libelle, city.id));
+                data.forEach(function(place) {
+                    $('#trip_place').append(new Option(place.libelle, place.id));
                 });
                 Notiflix.Notify.Success('Modifications enregistrées !');
                 $("#closePlaceModalBtn").click();
