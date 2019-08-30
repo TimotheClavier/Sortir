@@ -57,7 +57,7 @@ function eventConfirm () {
   )
 }
 
-function placeConfirm () {
+function placeConfirm (id) {
   Notiflix.Confirm.Show(
     'Attention',
     'Voulez vous vraiment supprimer ce site ?' +
@@ -65,12 +65,12 @@ function placeConfirm () {
     'Oui',
     'Non',
     function () {
-      $('#form_delete_place').submit()
+      $('#form_delete_place' + id).submit()
     }
   )
 }
 
-function cityConfirm () {
+function cityConfirm (id) {
   Notiflix.Confirm.Show(
     'Attention',
     'Voulez vous vraiment supprimer ce site ?' +
@@ -78,7 +78,7 @@ function cityConfirm () {
     'Oui',
     'Non',
     function () {
-      $('#form_delete_city').submit()
+      $('#form_delete_city' + id).submit()
     }
   )
 }

@@ -73,12 +73,15 @@ class PlaceController extends Controller
      * @Route("/{id}/edit", name="place_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Place $place
+     * @param CityRepository $cityRepository
      * @return Response
      */
-    public function edit(Request $request, Place $place): Response
+    public function edit(Request $request, Place $place, CityRepository $cityRepository)
     {
-        $form = $this->createForm(PlaceType::class, $place);
+        $cities = $cityRepository->findBy([], ['libelle' => 'ASC']);
+        $form = $this->createForm(PlaceType::class, $place, ['cities' => $cities]);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();

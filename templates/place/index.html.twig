@@ -29,7 +29,7 @@
                         <td>
                             <a href="{{ path('place_show', {'id': place.id}) }}"><i class="fas fa-eye"></i></a>
                             <a href="{{ path('place_edit', {'id': place.id}) }}" class="green-text"><i class="fas fa-pen"></i></a>
-                            {{ include('place/_delete_form.html.twig') }}
+                            {{ include('place/_delete_form.html.twig', {'place': place }) }}
                         </td>
                     </tr>
                 {% else %}

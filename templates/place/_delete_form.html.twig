@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('place_delete', {'id': place.id}) }}" id="form_delete_place">
+<form method="post" action="{{ path('place_delete', {'id': place.id}) }}" id="form_delete_place{{ place.id }}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ place.id) }}">
-    <a class="red-text" onclick="placeConfirm()"><i class="fas fa-trash"></i></a>
+    <a class="red-text" onclick="placeConfirm({{ place.id }})"><i class="fas fa-trash"></i></a>
 </form>
