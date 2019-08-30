@@ -69,7 +69,12 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Email incorrect.');
+        }
+
+        if (!$user->getActive()) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('Votre compte a été désactivée.');
         }
 
         return $user;
